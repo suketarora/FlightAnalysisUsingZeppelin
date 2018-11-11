@@ -1,1 +1,1527 @@
-﻿{"paragraphs":[{"text":"case class Flight(YEAR: String, MONTH: String, DAY: String, DAY_OF_WEEK: String, AIRLINE: String, FLIGHT_NUMBER: String, TAIL_NUMBER: String, ORIGIN_AIRPORT: String, DESTINATION_AIRPORT: String, SCHEDULED_DEPARTURE: String, DEPARTURE_TIME: String, DEPARTURE_DELAY: String, TAXI_OUT: String, WHEELS_OFF: String, SCHEDULED_TIME: String, ELAPSED_TIME: String, AIR_TIME: String, DISTANCE: String, WHEELS_ON: String, TAXI_IN: String, SCHEDULED_ARRIVAL: String, ARRIVAL_TIME: String, ARRIVAL_DELAY: String, DIVERTED: String, CANCELLED: String, CANCELLATION_REASON: String, AIR_SYSTEM_DELAY: String, SECURITY_DELAY: String, AIRLINE_DELAY: String, LATE_AIRCRAFT_DELAY: String, WEATHER_DELAY: String) extends Serializable {}\ncase class Airport(IATA_CODE: String, AIRPORT: String, CITY: String, STATE: String, COUNTRY: String, LATITUDE: String, LONGITUDE: String)\n","user":"anonymous","dateUpdated":"2018-11-02T13:42:45+0530","config":{"colWidth":12,"fontSize":9,"enabled":true,"results":{},"editorSetting":{"language":"scala","editOnDblClick":false,"completionKey":"TAB","completionSupport":true},"editorMode":"ace/mode/scala","title":true},"settings":{"params":{},"forms":{}},"results":{"code":"SUCCESS","msg":[{"type":"TEXT","data":"defined class Flight\ndefined class Airport\n"}]},"apps":[],"jobName":"paragraph_1541132179822_-558301930","id":"20181102-094619_112104951","dateCreated":"2018-11-02T09:46:19+0530","dateStarted":"2018-11-02T13:42:45+0530","dateFinished":"2018-11-02T13:42:46+0530","status":"FINISHED","progressUpdateIntervalMs":500,"focus":true,"$$hashKey":"object:208","title":"Create Case Classes"},{"text":" // # File location and type\n    val file_location = \"file:///home/suket/Documents/FlightData/flights.csv\"\n    val file_type = \"csv\"\n\n    // # CSV options\n    val infer_schema = \"false\"\n    val first_row_is_header = \"true\"\n    val delimiter = \",\"\n","user":"anonymous","dateUpdated":"2018-11-02T13:42:46+0530","config":{"colWidth":12,"fontSize":9,"enabled":true,"results":{},"editorSetting":{"language":"scala","editOnDblClick":false,"completionKey":"TAB","completionSupport":true},"editorMode":"ace/mode/scala","title":false},"settings":{"params":{},"forms":{}},"results":{"code":"SUCCESS","msg":[{"type":"TEXT","data":"file_location: String = file:///home/suket/Documents/FlightData/flights.csv\nfile_type: String = csv\ninfer_schema: String = false\nfirst_row_is_header: String = true\ndelimiter: String = ,\n"}]},"apps":[],"jobName":"paragraph_1541132492751_232959943","id":"20181102-095132_2097536769","dateCreated":"2018-11-02T09:51:32+0530","dateStarted":"2018-11-02T13:42:46+0530","dateFinished":"2018-11-02T13:42:47+0530","status":"FINISHED","progressUpdateIntervalMs":500,"$$hashKey":"object:209","title":""},{"text":"// import org.apache.spark.sql.types._\n\n// val customSchema = StructType(Array(\n       \n//         StructField(\"YEAR\", StringType, true),\n//         StructField(\"DISTANCE\", IntegerType, true),\n//         StructField(\"state\", StringType, true),\n//         StructField(\"latitude\", FloatType, true),\n//         StructField(\"longitude\", FloatType, true),\n//         StructField(\"timezone\", IntegerType, true),\n//         StructField(\"dst\", StringType, true)\n\n//       ))","user":"anonymous","dateUpdated":"2018-11-02T13:42:47+0530","config":{"colWidth":12,"fontSize":9,"enabled":true,"results":{},"editorSetting":{"language":"scala","editOnDblClick":false,"completionKey":"TAB","completionSupport":true},"editorMode":"ace/mode/scala"},"settings":{"params":{},"forms":{}},"results":{"code":"SUCCESS","msg":[]},"apps":[],"jobName":"paragraph_1541137843693_1944129922","id":"20181102-112043_496002786","dateCreated":"2018-11-02T11:20:43+0530","dateStarted":"2018-11-02T13:42:47+0530","dateFinished":"2018-11-02T13:42:47+0530","status":"FINISHED","progressUpdateIntervalMs":500,"$$hashKey":"object:210"},{"text":" // # The applied options are for CSV files. For other file types, these will be ignored.\n    val flights = (spark.read.format(file_type)\n      .option(\"inferSchema\",infer_schema )\n      .option(\"header\", first_row_is_header)\n      .option(\"sep\", delimiter)\n    //   .schema(customSchema)\n      .load(file_location).as[Flight])","user":"anonymous","dateUpdated":"2018-11-02T13:42:47+0530","config":{"colWidth":12,"fontSize":9,"enabled":true,"results":{},"editorSetting":{"language":"scala","editOnDblClick":false,"completionKey":"TAB","completionSupport":true},"editorMode":"ace/mode/scala","title":true},"settings":{"params":{},"forms":{}},"results":{"code":"SUCCESS","msg":[{"type":"TEXT","data":"flights: org.apache.spark.sql.Dataset[Flight] = [YEAR: string, MONTH: string ... 29 more fields]\n"}]},"apps":[],"jobName":"paragraph_1541132807211_-1238128835","id":"20181102-095647_1633188587","dateCreated":"2018-11-02T09:56:47+0530","dateStarted":"2018-11-02T13:42:47+0530","dateFinished":"2018-11-02T13:42:51+0530","status":"FINISHED","progressUpdateIntervalMs":500,"$$hashKey":"object:211","title":"Create a DataFrame from CSV file","runtimeInfos":{"jobUrl":{"propertyName":"jobUrl","label":"SPARK JOB","tooltip":"View in Spark web UI","group":"spark","values":["http://192.168.0.13:4040/jobs/job?id=84"],"interpreterSettingId":"spark"}}},{"text":"flights.printSchema()\n// flights.show()","user":"anonymous","dateUpdated":"2018-11-02T13:42:51+0530","config":{"colWidth":12,"fontSize":9,"enabled":true,"results":{},"editorSetting":{"language":"scala","editOnDblClick":false,"completionKey":"TAB","completionSupport":true},"editorMode":"ace/mode/scala","title":true},"settings":{"params":{},"forms":{}},"results":{"code":"SUCCESS","msg":[{"type":"TEXT","data":"root\n |-- YEAR: string (nullable = true)\n |-- MONTH: string (nullable = true)\n |-- DAY: string (nullable = true)\n |-- DAY_OF_WEEK: string (nullable = true)\n |-- AIRLINE: string (nullable = true)\n |-- FLIGHT_NUMBER: string (nullable = true)\n |-- TAIL_NUMBER: string (nullable = true)\n |-- ORIGIN_AIRPORT: string (nullable = true)\n |-- DESTINATION_AIRPORT: string (nullable = true)\n |-- SCHEDULED_DEPARTURE: string (nullable = true)\n |-- DEPARTURE_TIME: string (nullable = true)\n |-- DEPARTURE_DELAY: string (nullable = true)\n |-- TAXI_OUT: string (nullable = true)\n |-- WHEELS_OFF: string (nullable = true)\n |-- SCHEDULED_TIME: string (nullable = true)\n |-- ELAPSED_TIME: string (nullable = true)\n |-- AIR_TIME: string (nullable = true)\n |-- DISTANCE: string (nullable = true)\n |-- WHEELS_ON: string (nullable = true)\n |-- TAXI_IN: string (nullable = true)\n |-- SCHEDULED_ARRIVAL: string (nullable = true)\n |-- ARRIVAL_TIME: string (nullable = true)\n |-- ARRIVAL_DELAY: string (nullable = true)\n |-- DIVERTED: string (nullable = true)\n |-- CANCELLED: string (nullable = true)\n |-- CANCELLATION_REASON: string (nullable = true)\n |-- AIR_SYSTEM_DELAY: string (nullable = true)\n |-- SECURITY_DELAY: string (nullable = true)\n |-- AIRLINE_DELAY: string (nullable = true)\n |-- LATE_AIRCRAFT_DELAY: string (nullable = true)\n |-- WEATHER_DELAY: string (nullable = true)\n\n"}]},"apps":[],"jobName":"paragraph_1541132622044_-507297241","id":"20181102-095342_2022847753","dateCreated":"2018-11-02T09:53:42+0530","dateStarted":"2018-11-02T13:42:51+0530","dateFinished":"2018-11-02T13:42:52+0530","status":"FINISHED","progressUpdateIntervalMs":500,"$$hashKey":"object:212","title":"Print Schema"},{"text":"// Create a Dataset containing flights with delayed departure by more than 15 min using \"filter\"\nval delayedFlights = (flights\n                        .select(\"AIRLINE\", \"DEPARTURE_DELAY\")\n                        .filter($\"DEPARTURE_DELAY\" > 15))\n                        \ndelayedFlights.show()","user":"anonymous","dateUpdated":"2018-11-02T13:42:52+0530","config":{"colWidth":12,"fontSize":9,"enabled":true,"results":{},"editorSetting":{"language":"scala","editOnDblClick":false,"completionKey":"TAB","completionSupport":true},"editorMode":"ace/mode/scala","title":true},"settings":{"params":{},"forms":{}},"results":{"code":"SUCCESS","msg":[{"type":"TEXT","data":"delayedFlights: org.apache.spark.sql.Dataset[org.apache.spark.sql.Row] = [AIRLINE: string, DEPARTURE_DELAY: string]\n+-------+---------------+\n|AIRLINE|DEPARTURE_DELAY|\n+-------+---------------+\n|     NK|             25|\n|     AA|             21|\n|     NK|             72|\n|     B6|             95|\n|     B6|             72|\n|     AA|            108|\n|     US|             60|\n|     AA|             58|\n|     AA|             53|\n|     UA|             19|\n|     B6|             43|\n|     UA|             56|\n|     DL|            148|\n|     EV|             16|\n|     AA|             55|\n|     DL|             18|\n|     F9|             36|\n|     OO|             73|\n|     UA|             39|\n|     EV|            213|\n+-------+---------------+\nonly showing top 20 rows\n\n"}]},"apps":[],"jobName":"paragraph_1541132648850_1783272054","id":"20181102-095408_1980850627","dateCreated":"2018-11-02T09:54:08+0530","dateStarted":"2018-11-02T13:42:52+0530","dateFinished":"2018-11-02T13:42:57+0530","status":"FINISHED","progressUpdateIntervalMs":500,"$$hashKey":"object:213","title":"Apply a filter to find flights delayed more than 15 min","runtimeInfos":{"jobUrl":{"propertyName":"jobUrl","label":"SPARK JOB","tooltip":"View in Spark web UI","group":"spark","values":["http://192.168.0.13:4040/jobs/job?id=85"],"interpreterSettingId":"spark"}}},{"text":"val numTotalFlights = flights.count()\nval numDelayedFlights = delayedFlights.count()\n\n// Print total number of delayed flights\nprintln(\"Percentage of Delayed Flights: \" + (numDelayedFlights.toFloat/numTotalFlights*100) + \"%\")","user":"anonymous","dateUpdated":"2018-11-02T13:42:57+0530","config":{"colWidth":12,"fontSize":9,"enabled":true,"results":{},"editorSetting":{},"editorHide":false,"tableHide":false,"title":true},"settings":{"params":{},"forms":{}},"results":{"code":"SUCCESS","msg":[{"type":"TEXT","data":"numTotalFlights: Long = 5819079\nnumDelayedFlights: Long = 1018558\nPercentage of Delayed Flights: 17.503767%\n"}]},"apps":[],"jobName":"paragraph_1541136309436_1326628554","id":"20181102-105509_19140123","dateCreated":"2018-11-02T10:55:09+0530","dateStarted":"2018-11-02T13:42:57+0530","dateFinished":"2018-11-02T13:43:26+0530","status":"FINISHED","progressUpdateIntervalMs":500,"$$hashKey":"object:214","title":"Display percentage of delayed flights","runtimeInfos":{"jobUrl":{"propertyName":"jobUrl","label":"SPARK JOB","tooltip":"View in Spark web UI","group":"spark","values":["http://192.168.0.13:4040/jobs/job?id=86","http://192.168.0.13:4040/jobs/job?id=87"],"interpreterSettingId":"spark"}}},{"user":"anonymous","config":{"colWidth":12,"fontSize":9,"enabled":true,"results":{},"editorSetting":{"language":"scala","editOnDblClick":false,"completionKey":"TAB","completionSupport":true},"editorMode":"ace/mode/scala","title":true},"settings":{"params":{},"forms":{}},"apps":[],"jobName":"paragraph_1541136353554_-1287416994","id":"20181102-105553_1355189558","dateCreated":"2018-11-02T10:55:53+0530","status":"FINISHED","progressUpdateIntervalMs":500,"$$hashKey":"object:215","text":"import org.apache.spark.sql.functions.udf\n\n// Define a UDF to find delayed flights\n\n// Assume:\n//  if ArrDelay is not available then Delayed = False\n//  if ArrDelay > 15 min then Delayed = True else False\n\nval isDelayedUDF = udf((DEPARTURE_DELAY: String) => { \n                 try {\n        if (DEPARTURE_DELAY.trim == \"null\") 0 \n                else if (DEPARTURE_DELAY.trim.toInt > 15) 1 \n                else 0\n      } catch {\n         case _  : Throwable =>{\n           0\n         }\n         \n         \n      }\n                \n    \n})","dateUpdated":"2018-11-02T13:43:26+0530","dateFinished":"2018-11-02T13:43:26+0530","dateStarted":"2018-11-02T13:43:26+0530","title":" Create a UDF to determine delays","results":{"code":"SUCCESS","msg":[{"type":"TEXT","data":"import org.apache.spark.sql.functions.udf\nisDelayedUDF: org.apache.spark.sql.expressions.UserDefinedFunction = UserDefinedFunction(<function1>,IntegerType,Some(List(StringType)))\n"}]}},{"user":"anonymous","config":{"colWidth":12,"fontSize":9,"enabled":true,"results":{},"editorSetting":{"language":"scala","editOnDblClick":false,"completionKey":"TAB","completionSupport":true},"editorMode":"ace/mode/scala","title":true},"settings":{"params":{},"forms":{}},"apps":[],"jobName":"paragraph_1541139529073_496541041","id":"20181102-114849_1411988905","dateCreated":"2018-11-02T11:48:49+0530","status":"FINISHED","progressUpdateIntervalMs":500,"focus":true,"$$hashKey":"object:1501","text":"val flightsWithDelays = flights.select($\"YEAR\", $\"MONTH\", $\"AIRLINE\", $\"FLIGHT_NUMBER\", $\"ORIGIN_AIRPORT\", $\"DEPARTURE_DELAY\", \n                    isDelayedUDF($\"DEPARTURE_DELAY\").alias(\"IsDelayed\"))\n                    \nflightsWithDelays.show(5)","dateUpdated":"2018-11-02T13:43:26+0530","dateFinished":"2018-11-02T13:43:34+0530","dateStarted":"2018-11-02T13:43:26+0530","title":"Create a new DataFrame with IsDelayed column","results":{"code":"SUCCESS","msg":[{"type":"TEXT","data":"flightsWithDelays: org.apache.spark.sql.DataFrame = [YEAR: string, MONTH: string ... 5 more fields]\n+----+-----+-------+-------------+--------------+---------------+---------+\n|YEAR|MONTH|AIRLINE|FLIGHT_NUMBER|ORIGIN_AIRPORT|DEPARTURE_DELAY|IsDelayed|\n+----+-----+-------+-------------+--------------+---------------+---------+\n|2015|    1|     AS|           98|           ANC|            -11|        0|\n|2015|    1|     AA|         2336|           LAX|             -8|        0|\n|2015|    1|     US|          840|           SFO|             -2|        0|\n|2015|    1|     AA|          258|           LAX|             -5|        0|\n|2015|    1|     AS|          135|           SEA|             -1|        0|\n+----+-----+-------+-------------+--------------+---------------+---------+\nonly showing top 5 rows\n\n"}]},"runtimeInfos":{"jobUrl":{"propertyName":"jobUrl","label":"SPARK JOB","tooltip":"View in Spark web UI","group":"spark","values":["http://192.168.0.13:4040/jobs/job?id=88"],"interpreterSettingId":"spark"}}},{"user":"anonymous","config":{"colWidth":12,"fontSize":9,"enabled":true,"results":{},"editorSetting":{"language":"scala","editOnDblClick":false,"completionKey":"TAB","completionSupport":true},"editorMode":"ace/mode/scala","title":true},"settings":{"params":{},"forms":{}},"apps":[],"jobName":"paragraph_1541141172222_1538187491","id":"20181102-121612_1646751899","dateCreated":"2018-11-02T12:16:12+0530","status":"FINISHED","progressUpdateIntervalMs":500,"focus":true,"$$hashKey":"object:2235","text":"flightsWithDelays.agg((sum(\"IsDelayed\") * 100 / count(\"DEPARTURE_DELAY\")).alias(\"Percentage of Delayed Flights\")).show()","dateUpdated":"2018-11-02T13:43:34+0530","dateFinished":"2018-11-02T13:43:49+0530","dateStarted":"2018-11-02T13:43:34+0530","title":"Calculate percentage of delayed flights using flightsWithDelays DataFrame","results":{"code":"SUCCESS","msg":[{"type":"TEXT","data":"+-----------------------------+\n|Percentage of Delayed Flights|\n+-----------------------------+\n|           17.766808781414586|\n+-----------------------------+\n\n"}]},"runtimeInfos":{"jobUrl":{"propertyName":"jobUrl","label":"SPARK JOB","tooltip":"View in Spark web UI","group":"spark","values":["http://192.168.0.13:4040/jobs/job?id=89"],"interpreterSettingId":"spark"}}},{"user":"anonymous","config":{"colWidth":6,"fontSize":9,"enabled":true,"results":{},"editorSetting":{"language":"scala","editOnDblClick":false,"completionKey":"TAB","completionSupport":true},"editorMode":"ace/mode/scala","title":true},"settings":{"params":{},"forms":{}},"apps":[],"jobName":"paragraph_1541141551911_525831843","id":"20181102-122231_834939348","dateCreated":"2018-11-02T12:22:31+0530","status":"FINISHED","progressUpdateIntervalMs":500,"focus":true,"$$hashKey":"object:2825","text":"(flights.select(\"ORIGIN_AIRPORT\", \"DESTINATION_AIRPORT\", \"TAXI_IN\")\n        .groupBy(\"ORIGIN_AIRPORT\", \"DESTINATION_AIRPORT\")\n        .agg(avg(\"TAXI_IN\")\n        .alias(\"AVG_TAXI_IN\"))\n        .orderBy(desc(\"AVG_TAXI_IN\"))\n        .show(10))","dateUpdated":"2018-11-02T13:43:49+0530","dateFinished":"2018-11-02T13:44:08+0530","dateStarted":"2018-11-02T13:43:49+0530","title":"Find Avg Taxi-in","results":{"code":"SUCCESS","msg":[{"type":"TEXT","data":"+--------------+-------------------+------------------+\n|ORIGIN_AIRPORT|DESTINATION_AIRPORT|       AVG_TAXI_IN|\n+--------------+-------------------+------------------+\n|           CID|                LAX|              35.0|\n|           SGF|                CLT| 24.86725663716814|\n|         13796|              12266|20.161290322580644|\n|         12441|              13930|              20.0|\n|           EYW|                LGA|              20.0|\n|           MQT|                ORD|19.715827338129497|\n|           SUX|                ORD|19.642978003384094|\n|         15024|              11697|19.444444444444443|\n|           MSN|                MCO|            19.125|\n|         14262|              13930|19.037037037037038|\n+--------------+-------------------+------------------+\nonly showing top 10 rows\n\n"}]},"runtimeInfos":{"jobUrl":{"propertyName":"jobUrl","label":"SPARK JOB","tooltip":"View in Spark web UI","group":"spark","values":["http://192.168.0.13:4040/jobs/job?id=90"],"interpreterSettingId":"spark"}}},{"user":"anonymous","config":{"colWidth":6,"fontSize":9,"enabled":true,"results":{},"editorSetting":{"language":"scala","editOnDblClick":false,"completionKey":"TAB","completionSupport":true},"editorMode":"ace/mode/scala","title":true},"settings":{"params":{},"forms":{}},"apps":[],"jobName":"paragraph_1541143496793_40571729","id":"20181102-125456_1238335874","dateCreated":"2018-11-02T12:54:56+0530","status":"FINISHED","progressUpdateIntervalMs":500,"focus":true,"$$hashKey":"object:3865","dateUpdated":"2018-11-02T13:44:08+0530","dateFinished":"2018-11-02T13:44:26+0530","dateStarted":"2018-11-02T13:44:08+0530","title":"Find Avg Taxi-Out","results":{"code":"SUCCESS","msg":[{"type":"TEXT","data":"+--------------+-------------------+-----------------+\n|ORIGIN_AIRPORT|DESTINATION_AIRPORT|     AVG_TAXI_OUT|\n+--------------+-------------------+-----------------+\n|           LGA|                EYW|             76.0|\n|           IAD|                TTN|             69.0|\n|           SWF|                LGA|             58.0|\n|         12953|              11996|             51.0|\n|         11423|              13487|             48.0|\n|           DEN|                PIA|            47.25|\n|           LGA|                DSM|             44.0|\n|         11278|              11193|             43.0|\n|         12953|              13871|            42.32|\n|           MSO|                SEA|38.69230769230769|\n+--------------+-------------------+-----------------+\nonly showing top 10 rows\n\n"}]},"runtimeInfos":{"jobUrl":{"propertyName":"jobUrl","label":"SPARK JOB","tooltip":"View in Spark web UI","group":"spark","values":["http://192.168.0.13:4040/jobs/job?id=91"],"interpreterSettingId":"spark"}},"text":"(flights.select(\"ORIGIN_AIRPORT\", \"DESTINATION_AIRPORT\", \"TAXI_OUT\")\n        .groupBy(\"ORIGIN_AIRPORT\", \"DESTINATION_AIRPORT\")\n        .agg(avg(\"TAXI_OUT\")\n        .alias(\"AVG_TAXI_OUT\"))\n        .orderBy(desc(\"AVG_TAXI_OUT\"))\n        .show(10))"},{"user":"anonymous","config":{"colWidth":12,"fontSize":9,"enabled":true,"results":{},"editorSetting":{"language":"scala","editOnDblClick":false,"completionKey":"TAB","completionSupport":true},"editorMode":"ace/mode/scala","title":true},"settings":{"params":{},"forms":{}},"apps":[],"jobName":"paragraph_1541143651467_489533547","id":"20181102-125731_1787541473","dateCreated":"2018-11-02T12:57:31+0530","status":"FINISHED","progressUpdateIntervalMs":500,"focus":true,"$$hashKey":"object:4053","text":"\n// Convert flights DataFrame to a temporary view\nflights.createOrReplaceTempView(\"flightsView\")","dateUpdated":"2018-11-02T13:44:26+0530","dateFinished":"2018-11-02T13:44:27+0530","dateStarted":"2018-11-02T13:44:26+0530","title":"Register a Temporary View","results":{"code":"SUCCESS","msg":[]}},{"user":"anonymous","config":{"colWidth":12,"fontSize":9,"enabled":true,"results":{"0":{"graph":{"mode":"table","height":300,"optionOpen":false,"setting":{"table":{"tableGridState":{},"tableColumnTypeState":{"names":{"YEAR":"string","MONTH":"string","DAY":"string","DAY_OF_WEEK":"string","AIRLINE":"string","FLIGHT_NUMBER":"string","TAIL_NUMBER":"string","ORIGIN_AIRPORT":"string","DESTINATION_AIRPORT":"string","SCHEDULED_DEPARTURE":"string","DEPARTURE_TIME":"string","DEPARTURE_DELAY":"string","TAXI_OUT":"string","WHEELS_OFF":"string","SCHEDULED_TIME":"string","ELAPSED_TIME":"string","AIR_TIME":"string","DISTANCE":"string","WHEELS_ON":"string","TAXI_IN":"string","SCHEDULED_ARRIVAL":"string","ARRIVAL_TIME":"string","ARRIVAL_DELAY":"string","DIVERTED":"string","CANCELLED":"string","CANCELLATION_REASON":"string","AIR_SYSTEM_DELAY":"string","SECURITY_DELAY":"string","AIRLINE_DELAY":"string","LATE_AIRCRAFT_DELAY":"string","WEATHER_DELAY":"string"},"updated":false},"tableOptionSpecHash":"[{\"name\":\"useFilter\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable filter for columns\"},{\"name\":\"showPagination\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable pagination for better navigation\"},{\"name\":\"showAggregationFooter\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable a footer for displaying aggregated values\"}]","tableOptionValue":{"useFilter":false,"showPagination":false,"showAggregationFooter":false},"updated":false,"initialized":false},"multiBarChart":{"rotate":{"degree":"-45"},"xLabelStatus":"default"}},"commonSetting":{},"keys":[{"name":"YEAR","index":0,"aggr":"sum"}],"groups":[],"values":[{"name":"MONTH","index":1,"aggr":"sum"}]},"helium":{}}},"editorSetting":{"language":"sql","editOnDblClick":false,"completionKey":"TAB","completionSupport":true},"editorMode":"ace/mode/sql","title":true},"settings":{"params":{},"forms":{}},"apps":[],"jobName":"paragraph_1541144220079_-646057162","id":"20181102-130700_208101195","dateCreated":"2018-11-02T13:07:00+0530","status":"FINISHED","progressUpdateIntervalMs":500,"focus":true,"$$hashKey":"object:4208","dateUpdated":"2018-11-02T13:45:52+0530","dateFinished":"2018-11-02T13:44:39+0530","dateStarted":"2018-11-02T13:44:27+0530","title":"Preview Data in an interactive table format","results":{"code":"SUCCESS","msg":[{"type":"TABLE","data":"YEAR\tMONTH\tDAY\tDAY_OF_WEEK\tAIRLINE\tFLIGHT_NUMBER\tTAIL_NUMBER\tORIGIN_AIRPORT\tDESTINATION_AIRPORT\tSCHEDULED_DEPARTURE\tDEPARTURE_TIME\tDEPARTURE_DELAY\tTAXI_OUT\tWHEELS_OFF\tSCHEDULED_TIME\tELAPSED_TIME\tAIR_TIME\tDISTANCE\tWHEELS_ON\tTAXI_IN\tSCHEDULED_ARRIVAL\tARRIVAL_TIME\tARRIVAL_DELAY\tDIVERTED\tCANCELLED\tCANCELLATION_REASON\tAIR_SYSTEM_DELAY\tSECURITY_DELAY\tAIRLINE_DELAY\tLATE_AIRCRAFT_DELAY\tWEATHER_DELAY\n2015\t1\t1\t4\tAS\t98\tN407AS\tANC\tSEA\t0005\t2354\t-11\t21\t0015\t205\t194\t169\t1448\t0404\t4\t0430\t0408\t-22\t0\t0\tnull\tnull\tnull\tnull\tnull\tnull\n2015\t1\t1\t4\tAA\t2336\tN3KUAA\tLAX\tPBI\t0010\t0002\t-8\t12\t0014\t280\t279\t263\t2330\t0737\t4\t0750\t0741\t-9\t0\t0\tnull\tnull\tnull\tnull\tnull\tnull\n2015\t1\t1\t4\tUS\t840\tN171US\tSFO\tCLT\t0020\t0018\t-2\t16\t0034\t286\t293\t266\t2296\t0800\t11\t0806\t0811\t5\t0\t0\tnull\tnull\tnull\tnull\tnull\tnull\n2015\t1\t1\t4\tAA\t258\tN3HYAA\tLAX\tMIA\t0020\t0015\t-5\t15\t0030\t285\t281\t258\t2342\t0748\t8\t0805\t0756\t-9\t0\t0\tnull\tnull\tnull\tnull\tnull\tnull\n2015\t1\t1\t4\tAS\t135\tN527AS\tSEA\tANC\t0025\t0024\t-1\t11\t0035\t235\t215\t199\t1448\t0254\t5\t0320\t0259\t-21\t0\t0\tnull\tnull\tnull\tnull\tnull\tnull\n2015\t1\t1\t4\tDL\t806\tN3730B\tSFO\tMSP\t0025\t0020\t-5\t18\t0038\t217\t230\t206\t1589\t0604\t6\t0602\t0610\t8\t0\t0\tnull\tnull\tnull\tnull\tnull\tnull\n2015\t1\t1\t4\tNK\t612\tN635NK\tLAS\tMSP\t0025\t0019\t-6\t11\t0030\t181\t170\t154\t1299\t0504\t5\t0526\t0509\t-17\t0\t0\tnull\tnull\tnull\tnull\tnull\tnull\n2015\t1\t1\t4\tUS\t2013\tN584UW\tLAX\tCLT\t0030\t0044\t14\t13\t0057\t273\t249\t228\t2125\t0745\t8\t0803\t0753\t-10\t0\t0\tnull\tnull\tnull\tnull\tnull\tnull\n2015\t1\t1\t4\tAA\t1112\tN3LAAA\tSFO\tDFW\t0030\t0019\t-11\t17\t0036\t195\t193\t173\t1464\t0529\t3\t0545\t0532\t-13\t0\t0\tnull\tnull\tnull\tnull\tnull\tnull\n2015\t1\t1\t4\tDL\t1173\tN826DN\tLAS\tATL\t0030\t0033\t3\t12\t0045\t221\t203\t186\t1747\t0651\t5\t0711\t0656\t-15\t0\t0\tnull\tnull\tnull\tnull\tnull\tnull\n2015\t1\t1\t4\tDL\t2336\tN958DN\tDEN\tATL\t0030\t0024\t-6\t12\t0036\t173\t149\t133\t1199\t0449\t4\t0523\t0453\t-30\t0\t0\tnull\tnull\tnull\tnull\tnull\tnull\n2015\t1\t1\t4\tAA\t1674\tN853AA\tLAS\tMIA\t0035\t0027\t-8\t21\t0048\t268\t266\t238\t2174\t0746\t7\t0803\t0753\t-10\t0\t0\tnull\tnull\tnull\tnull\tnull\tnull\n2015\t1\t1\t4\tDL\t1434\tN547US\tLAX\tMSP\t0035\t0035\t0\t18\t0053\t214\t210\t188\t1535\t0601\t4\t0609\t0605\t-4\t0\t0\tnull\tnull\tnull\tnull\tnull\tnull\n2015\t1\t1\t4\tDL\t2324\tN3751B\tSLC\tATL\t0040\t0034\t-6\t18\t0052\t215\t199\t176\t1590\t0548\t5\t0615\t0553\t-22\t0\t0\tnull\tnull\tnull\tnull\tnull\tnull\n2015\t1\t1\t4\tDL\t2440\tN651DL\tSEA\tMSP\t0040\t0039\t-1\t28\t0107\t189\t198\t166\t1399\t0553\t4\t0549\t0557\t8\t0\t0\tnull\tnull\tnull\tnull\tnull\tnull\n2015\t1\t1\t4\tAS\t108\tN309AS\tANC\tSEA\t0045\t0041\t-4\t17\t0058\t204\t194\t173\t1448\t0451\t4\t0509\t0455\t-14\t0\t0\tnull\tnull\tnull\tnull\tnull\tnull\n2015\t1\t1\t4\tDL\t1560\tN3743H\tANC\tSEA\t0045\t0031\t-14\t25\t0056\t210\t200\t171\t1448\t0447\t4\t0515\t0451\t-24\t0\t0\tnull\tnull\tnull\tnull\tnull\tnull\n2015\t1\t1\t4\tUA\t1197\tN78448\tSFO\tIAH\t0048\t0042\t-6\t11\t0053\t218\t217\t199\t1635\t0612\t7\t0626\t0619\t-7\t0\t0\tnull\tnull\tnull\tnull\tnull\tnull\n2015\t1\t1\t4\tAS\t122\tN413AS\tANC\tPDX\t0050\t0046\t-4\t11\t0057\t215\t201\t187\t1542\t0504\t3\t0525\t0507\t-18\t0\t0\tnull\tnull\tnull\tnull\tnull\tnull\n2015\t1\t1\t4\tDL\t1670\tN806DN\tPDX\tMSP\t0050\t0045\t-5\t9\t0054\t193\t186\t171\t1426\t0545\t6\t0603\t0551\t-12\t0\t0\tnull\tnull\tnull\tnull\tnull\tnull\n"}]},"runtimeInfos":{"jobUrl":{"propertyName":"jobUrl","label":"SPARK JOB","tooltip":"View in Spark web UI","group":"spark","values":["http://192.168.0.13:4040/jobs/job?id=92"],"interpreterSettingId":"spark"}},"text":"%spark.sql\n\nSELECT * FROM flightsView LIMIT 20"},{"user":"anonymous","config":{"colWidth":12,"fontSize":9,"enabled":true,"results":{},"editorSetting":{"language":"scala","editOnDblClick":false,"completionKey":"TAB","completionSupport":true},"editorMode":"ace/mode/scala","title":true},"settings":{"params":{},"forms":{}},"apps":[],"jobName":"paragraph_1541144257972_2078717887","id":"20181102-130737_1895612082","dateCreated":"2018-11-02T13:07:37+0530","status":"FINISHED","progressUpdateIntervalMs":500,"focus":true,"$$hashKey":"object:4295","text":"\n// Register a helper UDF to find delayed flights\n// Note that this is a UDF specific for use with the sparkSession\n\n// Assume:\n//  if ArrDelay is not available then Delayed = False\n//  if ArrDelay > 15 min then Delayed = True else False\n\nval isDelayedUDF = (DEPARTURE_DELAY: String) => { \n                 try {\n        if (DEPARTURE_DELAY.trim == \"null\") 0 \n                else if (DEPARTURE_DELAY.trim.toInt > 15) 1 \n                else 0\n      } catch {\n         case _  : Throwable =>{\n           0\n         }\n         \n         \n      }\n                \n    \n}\n\nspark.udf.register(\"isDelayedUDF\", isDelayedUDF )","dateUpdated":"2018-11-02T13:44:39+0530","dateFinished":"2018-11-02T13:44:40+0530","dateStarted":"2018-11-02T13:44:39+0530","title":"Register a User Defined Function (UDF)","results":{"code":"SUCCESS","msg":[{"type":"TEXT","data":"isDelayedUDF: String => Int = <function1>\nres307: org.apache.spark.sql.expressions.UserDefinedFunction = UserDefinedFunction(<function1>,IntegerType,Some(List(StringType)))\n"}]}},{"user":"anonymous","config":{"colWidth":12,"fontSize":9,"enabled":true,"results":{},"editorSetting":{"language":"scala","editOnDblClick":false,"completionKey":"TAB","completionSupport":true},"editorMode":"ace/mode/scala"},"settings":{"params":{},"forms":{}},"apps":[],"jobName":"paragraph_1541144628708_-735898648","id":"20181102-131348_16926639","dateCreated":"2018-11-02T13:13:48+0530","status":"FINISHED","progressUpdateIntervalMs":500,"focus":true,"$$hashKey":"object:8883","text":"flights.columns","dateUpdated":"2018-11-02T13:44:40+0530","dateFinished":"2018-11-02T13:44:41+0530","dateStarted":"2018-11-02T13:44:40+0530","results":{"code":"SUCCESS","msg":[{"type":"TEXT","data":"res309: Array[String] = Array(YEAR, MONTH, DAY, DAY_OF_WEEK, AIRLINE, FLIGHT_NUMBER, TAIL_NUMBER, ORIGIN_AIRPORT, DESTINATION_AIRPORT, SCHEDULED_DEPARTURE, DEPARTURE_TIME, DEPARTURE_DELAY, TAXI_OUT, WHEELS_OFF, SCHEDULED_TIME, ELAPSED_TIME, AIR_TIME, DISTANCE, WHEELS_ON, TAXI_IN, SCHEDULED_ARRIVAL, ARRIVAL_TIME, ARRIVAL_DELAY, DIVERTED, CANCELLED, CANCELLATION_REASON, AIR_SYSTEM_DELAY, SECURITY_DELAY, AIRLINE_DELAY, LATE_AIRCRAFT_DELAY, WEATHER_DELAY)\n"}]}},{"user":"anonymous","config":{"colWidth":6,"fontSize":9,"enabled":true,"results":{"0":{"graph":{"mode":"pieChart","height":300,"optionOpen":false,"setting":{"table":{"tableGridState":{},"tableColumnTypeState":{"names":{"AIRLINE":"string","NumDelays":"string"},"updated":false},"tableOptionSpecHash":"[{\"name\":\"useFilter\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable filter for columns\"},{\"name\":\"showPagination\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable pagination for better navigation\"},{\"name\":\"showAggregationFooter\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable a footer for displaying aggregated values\"}]","tableOptionValue":{"useFilter":false,"showPagination":false,"showAggregationFooter":false},"updated":false,"initialized":false}},"commonSetting":{}},"helium":{}}},"editorSetting":{"language":"sql","editOnDblClick":false,"completionKey":"TAB","completionSupport":true},"editorMode":"ace/mode/sql","title":true},"settings":{"params":{},"forms":{}},"apps":[],"jobName":"paragraph_1541144443651_878846459","id":"20181102-131043_1572925420","dateCreated":"2018-11-02T13:10:43+0530","status":"FINISHED","progressUpdateIntervalMs":500,"focus":true,"$$hashKey":"object:8764","dateUpdated":"2018-11-02T13:44:41+0530","dateFinished":"2018-11-02T13:45:00+0530","dateStarted":"2018-11-02T13:44:41+0530","title":"Compare Total Number of Delayed Flights by Carrier","results":{"code":"SUCCESS","msg":[{"type":"TABLE","data":"AIRLINE\tNumDelays\nUA\t116153\nNK\t30641\nAA\t119456\nEV\t94024\nB6\t55779\nDL\t118136\nOO\t93665\nF9\t20154\nUS\t28053\nMQ\t54572\nHA\t5234\nAS\t17923\nVX\t10630\nWN\t254138\n"}]},"runtimeInfos":{"jobUrl":{"propertyName":"jobUrl","label":"SPARK JOB","tooltip":"View in Spark web UI","group":"spark","values":["http://192.168.0.13:4040/jobs/job?id=93","http://192.168.0.13:4040/jobs/job?id=94","http://192.168.0.13:4040/jobs/job?id=95","http://192.168.0.13:4040/jobs/job?id=96","http://192.168.0.13:4040/jobs/job?id=97"],"interpreterSettingId":"spark"}},"text":"%spark.sql\n--- Compare Total Number of Delayed Flights by Carrier\nSELECT AIRLINE, SUM(isDelayedUDF(DEPARTURE_DELAY)) AS NumDelays FROM flightsView GROUP BY AIRLINE"},{"text":"%spark.sql\n--- Compare Total Delayed Time (min) by Carrier\nSELECT AIRLINE, SUM(DEPARTURE_DELAY) AS TotalTimeDelay FROM flightsView GROUP BY AIRLINE","user":"anonymous","dateUpdated":"2018-11-02T13:45:52+0530","config":{"colWidth":6,"fontSize":9,"enabled":true,"results":{"0":{"graph":{"mode":"multiBarChart","height":304,"optionOpen":false,"setting":{"table":{"tableGridState":{},"tableColumnTypeState":{"names":{"AIRLINE":"string","TotalTimeDelay":"string"},"updated":false},"tableOptionSpecHash":"[{\"name\":\"useFilter\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable filter for columns\"},{\"name\":\"showPagination\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable pagination for better navigation\"},{\"name\":\"showAggregationFooter\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable a footer for displaying aggregated values\"}]","tableOptionValue":{"useFilter":false,"showPagination":false,"showAggregationFooter":false},"updated":false,"initialized":false},"multiBarChart":{"rotate":{"degree":"-45"},"xLabelStatus":"default","stacked":true},"stackedAreaChart":{"rotate":{"degree":"-45"},"xLabelStatus":"default"},"lineChart":{"rotate":{"degree":"-45"},"xLabelStatus":"default"}},"commonSetting":{},"keys":[{"name":"AIRLINE","index":0,"aggr":"sum"}],"groups":[{"name":"AIRLINE","index":0,"aggr":"sum"}],"values":[{"name":"TotalTimeDelay","index":1,"aggr":"sum"}]},"helium":{}}},"editorSetting":{"language":"sql","editOnDblClick":false,"completionKey":"TAB","completionSupport":true},"editorMode":"ace/mode/sql","title":true},"settings":{"params":{},"forms":{}},"apps":[],"jobName":"paragraph_1541144731793_-1261966179","id":"20181102-131531_1945176534","dateCreated":"2018-11-02T13:15:31+0530","status":"FINISHED","progressUpdateIntervalMs":500,"focus":true,"$$hashKey":"object:13448","dateFinished":"2018-11-02T13:45:17+0530","dateStarted":"2018-11-02T13:45:00+0530","title":"Compare Total Delayed Time (min) by Carrier","results":{"code":"SUCCESS","msg":[{"type":"TABLE","data":"AIRLINE\tTotalTimeDelay\nUA\t7355348.0\nNK\t1840887.0\nAA\t6369435.0\nEV\t4857338.0\nB6\t3026467.0\nDL\t6427294.0\nOO\t4517510.0\nF9\t1205449.0\nUS\t1196447.0\nMQ\t2837908.0\nHA\t36972.0\nAS\t306997.0\nVX\t553852.0\nWN\t1.318652E7\n"}]},"runtimeInfos":{"jobUrl":{"propertyName":"jobUrl","label":"SPARK JOB","tooltip":"View in Spark web UI","group":"spark","values":["http://192.168.0.13:4040/jobs/job?id=98","http://192.168.0.13:4040/jobs/job?id=99","http://192.168.0.13:4040/jobs/job?id=100","http://192.168.0.13:4040/jobs/job?id=101","http://192.168.0.13:4040/jobs/job?id=102"],"interpreterSettingId":"spark"}}},{"text":"%spark.sql\n--- Find Average Distance Travelled by Carrier\nSELECT AIRLINE, avg(DISTANCE) AS AvgDistanceTraveled FROM flightsView GROUP BY AIRLINE ORDER BY AvgDistanceTraveled DESC","user":"anonymous","dateUpdated":"2018-11-02T13:45:52+0530","config":{"colWidth":12,"fontSize":9,"enabled":true,"results":{"0":{"graph":{"mode":"multiBarChart","height":300,"optionOpen":false,"setting":{"table":{"tableGridState":{},"tableColumnTypeState":{"names":{"AIRLINE":"string","AvgDistanceTraveled":"string"},"updated":false},"tableOptionSpecHash":"[{\"name\":\"useFilter\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable filter for columns\"},{\"name\":\"showPagination\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable pagination for better navigation\"},{\"name\":\"showAggregationFooter\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable a footer for displaying aggregated values\"}]","tableOptionValue":{"useFilter":false,"showPagination":false,"showAggregationFooter":false},"updated":false,"initialized":false},"lineChart":{"rotate":{"degree":"-45"},"xLabelStatus":"default"},"stackedAreaChart":{"rotate":{"degree":"-45"},"xLabelStatus":"default","style":"stack"},"multiBarChart":{"rotate":{"degree":"-45"},"xLabelStatus":"default","stacked":true}},"commonSetting":{},"keys":[{"name":"AIRLINE","index":0,"aggr":"sum"}],"groups":[{"name":"AIRLINE","index":0,"aggr":"sum"}],"values":[{"name":"AvgDistanceTraveled","index":1,"aggr":"sum"}]},"helium":{}}},"editorSetting":{"language":"sql","editOnDblClick":false,"completionKey":"TAB","completionSupport":true},"editorMode":"ace/mode/sql","title":true},"settings":{"params":{},"forms":{}},"apps":[],"jobName":"paragraph_1541144863237_1927953449","id":"20181102-131743_1827279121","dateCreated":"2018-11-02T13:17:43+0530","status":"FINISHED","progressUpdateIntervalMs":500,"focus":true,"$$hashKey":"object:14211","dateFinished":"2018-11-02T13:45:34+0530","dateStarted":"2018-11-02T13:45:17+0530","title":"Find Average Distance Travelled by Carrier","results":{"code":"SUCCESS","msg":[{"type":"TABLE","data":"AIRLINE\tAvgDistanceTraveled\nVX\t1405.9893220037802\nUA\t1271.5456844081027\nAS\t1197.4180824363411\nB6\t1062.1751782451095\nAA\t1041.3392223520077\nNK\t985.2671176275143\nF9\t967.2148597472368\nUS\t911.5038623153763\nDL\t853.6218253392869\nWN\t740.7113345035682\nHA\t632.5918423536816\nOO\t496.7721639899856\nEV\t462.25173914335716\nMQ\t422.31540701621003\n"}]},"runtimeInfos":{"jobUrl":{"propertyName":"jobUrl","label":"SPARK JOB","tooltip":"View in Spark web UI","group":"spark","values":["http://192.168.0.13:4040/jobs/job?id=103"],"interpreterSettingId":"spark"}}},{"text":"%spark.sql\n\nSELECT DAY_OF_WEEK, CASE WHEN isDelayedUDF(DEPARTURE_DELAY) = 1 THEN 'delayed' ELSE 'ok' END AS Delay, COUNT(1) AS Count\nFROM flightsView\nGROUP BY DAY_OF_WEEK, CASE WHEN isDelayedUDF(DEPARTURE_DELAY) = 1 THEN 'delayed' ELSE 'ok' END\nORDER BY DAY_OF_WEEK\n","user":"anonymous","dateUpdated":"2018-11-02T13:47:54+0530","config":{"colWidth":12,"fontSize":9,"enabled":true,"results":{"0":{"graph":{"mode":"multiBarChart","height":300,"optionOpen":false,"setting":{"table":{"tableGridState":{},"tableColumnTypeState":{"names":{"DAY_OF_WEEK":"string","Delay":"string","Count":"string"},"updated":false},"tableOptionSpecHash":"[{\"name\":\"useFilter\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable filter for columns\"},{\"name\":\"showPagination\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable pagination for better navigation\"},{\"name\":\"showAggregationFooter\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable a footer for displaying aggregated values\"}]","tableOptionValue":{"useFilter":false,"showPagination":false,"showAggregationFooter":false},"updated":false,"initialized":false},"multiBarChart":{"rotate":{"degree":"-45"},"xLabelStatus":"default","stacked":false},"stackedAreaChart":{"rotate":{"degree":"-45"},"xLabelStatus":"default"},"lineChart":{"rotate":{"degree":"-45"},"xLabelStatus":"default"}},"commonSetting":{},"keys":[{"name":"DAY_OF_WEEK","index":0,"aggr":"sum"}],"groups":[{"name":"Delay","index":1,"aggr":"sum"}],"values":[{"name":"Count","index":2,"aggr":"sum"}]},"helium":{}}},"editorSetting":{"language":"sql","editOnDblClick":false,"completionKey":"TAB","completionSupport":true},"editorMode":"ace/mode/sql","title":true},"settings":{"params":{},"forms":{}},"apps":[],"jobName":"paragraph_1541145138179_-159197214","id":"20181102-132218_319338924","dateCreated":"2018-11-02T13:22:18+0530","status":"FINISHED","progressUpdateIntervalMs":500,"focus":true,"$$hashKey":"object:15235","dateFinished":"2018-11-02T13:45:52+0530","dateStarted":"2018-11-02T13:45:34+0530","title":"Find Out When Most Flights Get Delayed by Day of Week","results":{"code":"SUCCESS","msg":[{"type":"TABLE","data":"DAY_OF_WEEK\tDelay\tCount\n1\tok\t705538\n1\tdelayed\t160005\n2\tok\t700112\n2\tdelayed\t144488\n3\tdelayed\t145434\n3\tok\t710463\n4\tdelayed\t160435\n4\tok\t712086\n5\tdelayed\t155343\n5\tok\t706866\n6\tdelayed\t109389\n6\tok\t591156\n7\tok\t674300\n7\tdelayed\t143464\n"}]},"runtimeInfos":{"jobUrl":{"propertyName":"jobUrl","label":"SPARK JOB","tooltip":"View in Spark web UI","group":"spark","values":["http://192.168.0.13:4040/jobs/job?id=104"],"interpreterSettingId":"spark"}}},{"text":"%spark.sql\n\nSELECT CAST(DEPARTURE_TIME / 100 AS INT) AS Hour, CASE WHEN isDelayedUDF(DEPARTURE_DELAY) = 1 THEN 'delayed' ELSE 'ok' END AS Delay, COUNT(1) AS Count\nFROM flightsView\nGROUP BY CAST(DEPARTURE_TIME / 100 AS INT), CASE WHEN isDelayedUDF(DEPARTURE_DELAY) = 1 THEN 'delayed' ELSE 'ok' END\nORDER BY Hour","user":"anonymous","dateUpdated":"2018-11-02T13:57:09+0530","config":{"colWidth":12,"fontSize":9,"enabled":true,"results":{"0":{"graph":{"mode":"stackedAreaChart","height":300,"optionOpen":false,"setting":{"table":{"tableGridState":{},"tableColumnTypeState":{"names":{"Hour":"string","Delay":"string","Count":"string"},"updated":false},"tableOptionSpecHash":"[{\"name\":\"useFilter\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable filter for columns\"},{\"name\":\"showPagination\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable pagination for better navigation\"},{\"name\":\"showAggregationFooter\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable a footer for displaying aggregated values\"}]","tableOptionValue":{"useFilter":false,"showPagination":false,"showAggregationFooter":false},"updated":false,"initialized":false},"multiBarChart":{"rotate":{"degree":"-45"},"xLabelStatus":"default"},"stackedAreaChart":{"rotate":{"degree":"-45"},"xLabelStatus":"default","style":"stack"}},"commonSetting":{},"keys":[{"name":"Hour","index":0,"aggr":"sum"}],"groups":[{"name":"Delay","index":1,"aggr":"sum"}],"values":[{"name":"Count","index":2,"aggr":"sum"}]},"helium":{}}},"editorSetting":{"language":"sql","editOnDblClick":false,"completionKey":"TAB","completionSupport":true},"editorMode":"ace/mode/sql","title":true},"settings":{"params":{},"forms":{}},"apps":[],"jobName":"paragraph_1541145464247_-304733171","id":"20181102-132744_609529302","dateCreated":"2018-11-02T13:27:44+0530","status":"FINISHED","progressUpdateIntervalMs":500,"focus":true,"$$hashKey":"object:16529","dateFinished":"2018-11-02T13:54:03+0530","dateStarted":"2018-11-02T13:53:46+0530","title":"Find Out When Most Flights Get Delayed by Hour","results":{"code":"SUCCESS","msg":[{"type":"TABLE","data":"Hour\tDelay\tCount\nnull\tok\t86153\n0\tok\t13931\n0\tdelayed\t11248\n1\tok\t4472\n1\tdelayed\t4373\n2\tok\t1022\n2\tdelayed\t1409\n3\tok\t579\n3\tdelayed\t515\n4\tok\t9947\n4\tdelayed\t252\n5\tdelayed\t1804\n5\tok\t193700\n6\tok\t351013\n6\tdelayed\t12987\n7\tok\t327872\n7\tdelayed\t23276\n8\tdelayed\t30493\n8\tok\t325219\n9\tok\t297339\n9\tdelayed\t39201\n10\tok\t312965\n10\tdelayed\t45952\n11\tdelayed\t51869\n11\tok\t296446\n12\tdelayed\t56247\n12\tok\t288639\n13\tok\t288252\n13\tdelayed\t58633\n14\tok\t261135\n14\tdelayed\t65737\n15\tdelayed\t70129\n15\tok\t280601\n16\tok\t258595\n16\tdelayed\t72387\n17\tok\t286677\n17\tdelayed\t78161\n18\tdelayed\t84739\n18\tok\t240921\n19\tdelayed\t85679\n19\tok\t241749\n20\tok\t181747\n20\tdelayed\t82553\n21\tdelayed\t65130\n21\tok\t135823\n22\tok\t83779\n22\tdelayed\t50206\n23\tdelayed\t25360\n23\tok\t31650\n24\tok\t295\n24\tdelayed\t218\n"}]},"runtimeInfos":{"jobUrl":{"propertyName":"jobUrl","label":"SPARK JOB","tooltip":"View in Spark web UI","group":"spark","values":["http://192.168.0.13:4040/jobs/job?id=105"],"interpreterSettingId":"spark"}}},{"text":"%spark\n\nimport org.apache.spark.sql.SaveMode\n\n// Save and Overwrite our new DataFrame to an ORC file\nflightsWithDelays.write.format(\"orc\").mode(SaveMode.Overwrite).save(\"flightsWithDelays.orc\")\n","user":"anonymous","dateUpdated":"2018-11-02T13:56:20+0530","config":{"colWidth":12,"fontSize":9,"enabled":true,"results":{},"editorSetting":{"language":"scala","editOnDblClick":false,"completionKey":"TAB","completionSupport":true},"editorMode":"ace/mode/scala","title":true},"settings":{"params":{},"forms":{}},"apps":[],"jobName":"paragraph_1541147026668_979291723","id":"20181102-135346_1173943427","dateCreated":"2018-11-02T13:53:46+0530","status":"FINISHED","progressUpdateIntervalMs":500,"focus":true,"$$hashKey":"object:31892","dateFinished":"2018-11-02T13:57:09+0530","dateStarted":"2018-11-02T13:56:21+0530","title":"Save to ORC file","results":{"code":"SUCCESS","msg":[{"type":"TEXT","data":"import org.apache.spark.sql.SaveMode\n"}]},"runtimeInfos":{"jobUrl":{"propertyName":"jobUrl","label":"SPARK JOB","tooltip":"View in Spark web UI","group":"spark","values":["http://192.168.0.13:4040/jobs/job?id=106"],"interpreterSettingId":"spark"}}},{"text":"%spark\n\n// Load results back from ORC file\nval test = spark.read.format(\"orc\").load(\"flightsWithDelays.orc\")\n\n// Assert both DataFrames of the same size.\n//   Note that if assertion succeeds no warning messages will be printed\nassert (test.count == flightsWithDelays.count, println(\"Assertion Fail: Files are of different sizes.\"))\n\ntest.show(10)","user":"anonymous","dateUpdated":"2018-11-02T14:01:27+0530","config":{"colWidth":12,"fontSize":9,"enabled":true,"results":{},"editorSetting":{"language":"scala","editOnDblClick":false,"completionKey":"TAB","completionSupport":true},"editorMode":"ace/mode/scala","title":true},"settings":{"params":{},"forms":{}},"apps":[],"jobName":"paragraph_1541147180990_-110053383","id":"20181102-135620_1440159649","dateCreated":"2018-11-02T13:56:20+0530","status":"FINISHED","progressUpdateIntervalMs":500,"focus":true,"$$hashKey":"object:32991","dateFinished":"2018-11-02T14:00:03+0530","dateStarted":"2018-11-02T13:59:35+0530","title":"Load back from an ORC file","results":{"code":"SUCCESS","msg":[{"type":"TEXT","data":"test: org.apache.spark.sql.DataFrame = [YEAR: string, MONTH: string ... 5 more fields]\n+----+-----+-------+-------------+--------------+---------------+---------+\n|YEAR|MONTH|AIRLINE|FLIGHT_NUMBER|ORIGIN_AIRPORT|DEPARTURE_DELAY|IsDelayed|\n+----+-----+-------+-------------+--------------+---------------+---------+\n|2015|    1|     AS|           98|           ANC|            -11|        0|\n|2015|    1|     AA|         2336|           LAX|             -8|        0|\n|2015|    1|     US|          840|           SFO|             -2|        0|\n|2015|    1|     AA|          258|           LAX|             -5|        0|\n|2015|    1|     AS|          135|           SEA|             -1|        0|\n|2015|    1|     DL|          806|           SFO|             -5|        0|\n|2015|    1|     NK|          612|           LAS|             -6|        0|\n|2015|    1|     US|         2013|           LAX|             14|        0|\n|2015|    1|     AA|         1112|           SFO|            -11|        0|\n|2015|    1|     DL|         1173|           LAS|              3|        0|\n+----+-----+-------+-------------+--------------+---------------+---------+\nonly showing top 10 rows\n\n"}]},"runtimeInfos":{"jobUrl":{"propertyName":"jobUrl","label":"SPARK JOB","tooltip":"View in Spark web UI","group":"spark","values":["http://192.168.0.13:4040/jobs/job?id=107","http://192.168.0.13:4040/jobs/job?id=108","http://192.168.0.13:4040/jobs/job?id=109"],"interpreterSettingId":"spark"}}},{"text":"%spark\n\nflightsWithDelays.write.format(\"orc\").mode(SaveMode.Overwrite).saveAsTable(\"flightswithdelaystbl\")","user":"anonymous","dateUpdated":"2018-11-02T14:02:23+0530","config":{"colWidth":12,"fontSize":9,"enabled":true,"results":{},"editorSetting":{"language":"scala","editOnDblClick":false,"completionKey":"TAB","completionSupport":true},"editorMode":"ace/mode/scala","title":true},"settings":{"params":{},"forms":{}},"apps":[],"jobName":"paragraph_1541147375699_622352706","id":"20181102-135935_279121960","dateCreated":"2018-11-02T13:59:35+0530","status":"FINISHED","progressUpdateIntervalMs":500,"focus":true,"$$hashKey":"object:33223","dateFinished":"2018-11-02T14:03:06+0530","dateStarted":"2018-11-02T14:02:24+0530","title":"Save DataFrame as Permanent Table","results":{"code":"SUCCESS","msg":[]},"runtimeInfos":{"jobUrl":{"propertyName":"jobUrl","label":"SPARK JOB","tooltip":"View in Spark web UI","group":"spark","values":["http://192.168.0.13:4040/jobs/job?id=110"],"interpreterSettingId":"spark"}}},{"text":"%spark.sql\n\nSHOW TABLES\n\n-- Note that flightsWithDelaysTbl is a permanent table instead of a temporary view!","user":"anonymous","dateUpdated":"2018-11-02T14:05:19+0530","config":{"colWidth":12,"fontSize":9,"enabled":true,"results":{"0":{"graph":{"mode":"table","height":300,"optionOpen":false,"setting":{"table":{"tableGridState":{},"tableColumnTypeState":{"names":{"database":"string","tableName":"string","isTemporary":"string"},"updated":false},"tableOptionSpecHash":"[{\"name\":\"useFilter\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable filter for columns\"},{\"name\":\"showPagination\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable pagination for better navigation\"},{\"name\":\"showAggregationFooter\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable a footer for displaying aggregated values\"}]","tableOptionValue":{"useFilter":false,"showPagination":false,"showAggregationFooter":false},"updated":false,"initialized":false},"multiBarChart":{"rotate":{"degree":"-45"},"xLabelStatus":"default"}},"commonSetting":{},"keys":[{"name":"database","index":0,"aggr":"sum"}],"groups":[],"values":[{"name":"tableName","index":1,"aggr":"sum"}]},"helium":{}}},"editorSetting":{"language":"sql","editOnDblClick":false,"completionKey":"TAB","completionSupport":true},"editorMode":"ace/mode/sql","title":true},"settings":{"params":{},"forms":{}},"apps":[],"jobName":"paragraph_1541147543981_-1545836679","id":"20181102-140223_1244294759","dateCreated":"2018-11-02T14:02:23+0530","status":"FINISHED","progressUpdateIntervalMs":500,"focus":true,"$$hashKey":"object:33375","dateFinished":"2018-11-02T14:03:39+0530","dateStarted":"2018-11-02T14:03:39+0530","title":"Show Tables/Views","results":{"code":"SUCCESS","msg":[{"type":"TABLE","data":"database\ttableName\tisTemporary\ndefault\tflightswithdelaystbl\tfalse\n\tflightsview\ttrue\n"}]}},{"text":"%spark.sql\n\nSELECT COUNT(1) AS Total from flightswithdelaystbl  -- As you can see, there's no difference in querying a temporary view vs a permanent table","user":"anonymous","dateUpdated":"2018-11-02T14:06:06+0530","config":{"colWidth":12,"fontSize":9,"enabled":true,"results":{"0":{"graph":{"mode":"table","height":300,"optionOpen":false,"setting":{"table":{"tableGridState":{},"tableColumnTypeState":{"names":{"Total":"string"},"updated":false},"tableOptionSpecHash":"[{\"name\":\"useFilter\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable filter for columns\"},{\"name\":\"showPagination\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable pagination for better navigation\"},{\"name\":\"showAggregationFooter\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable a footer for displaying aggregated values\"}]","tableOptionValue":{"useFilter":false,"showPagination":false,"showAggregationFooter":false},"updated":false,"initialized":false}},"commonSetting":{}}}},"editorSetting":{"language":"sql","editOnDblClick":false,"completionKey":"TAB","completionSupport":true},"editorMode":"ace/mode/sql","title":true},"settings":{"params":{},"forms":{}},"apps":[],"jobName":"paragraph_1541147619151_-2057541751","id":"20181102-140339_722365839","dateCreated":"2018-11-02T14:03:39+0530","status":"FINISHED","progressUpdateIntervalMs":500,"focus":true,"$$hashKey":"object:33474","dateFinished":"2018-11-02T14:06:04+0530","dateStarted":"2018-11-02T14:06:03+0530","title":"Querying a Permanent Table","results":{"code":"SUCCESS","msg":[{"type":"TABLE","data":"Total\n5819079\n"}]},"runtimeInfos":{"jobUrl":{"propertyName":"jobUrl","label":"SPARK JOB","tooltip":"View in Spark web UI","group":"spark","values":["http://192.168.0.13:4040/jobs/job?id=111"],"interpreterSettingId":"spark"}}}],"name":"Flight","id":"2DW4ECK61","noteParams":{},"noteForms":{},"angularObjects":{"spark:shared_process":[]},"config":{"isZeppelinNotebookCronEnable":false,"looknfeel":"default","personalizedMode":"false"},"info":{}}
+{
+  "paragraphs": [
+    {
+      "title": "Create Case Classes",
+      "text": "case class Flight(YEAR: String, MONTH: String, DAY: String, DAY_OF_WEEK: String, AIRLINE: String, FLIGHT_NUMBER: String, TAIL_NUMBER: String, ORIGIN_AIRPORT: String, DESTINATION_AIRPORT: String, SCHEDULED_DEPARTURE: String, DEPARTURE_TIME: String, DEPARTURE_DELAY: String, TAXI_OUT: String, WHEELS_OFF: String, SCHEDULED_TIME: String, ELAPSED_TIME: String, AIR_TIME: String, DISTANCE: String, WHEELS_ON: String, TAXI_IN: String, SCHEDULED_ARRIVAL: String, ARRIVAL_TIME: String, ARRIVAL_DELAY: String, DIVERTED: String, CANCELLED: String, CANCELLATION_REASON: String, AIR_SYSTEM_DELAY: String, SECURITY_DELAY: String, AIRLINE_DELAY: String, LATE_AIRCRAFT_DELAY: String, WEATHER_DELAY: String) extends Serializable {}\ncase class Airport(IATA_CODE: String, AIRPORT: String, CITY: String, STATE: String, COUNTRY: String, LATITUDE: String, LONGITUDE: String)\n",
+      "user": "anonymous",
+      "dateUpdated": "2018-11-05 15:00:09.220",
+      "config": {
+        "colWidth": 12.0,
+        "fontSize": 9.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "editorMode": "ace/mode/scala",
+        "title": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "defined class Flight\ndefined class Airport\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1541132179822_-558301930",
+      "id": "20181102-094619_112104951",
+      "dateCreated": "2018-11-02 09:46:19.822",
+      "dateStarted": "2018-11-05 15:00:09.487",
+      "dateFinished": "2018-11-05 15:00:54.180",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "title": "",
+      "text": " // # File location and type\n    val file_location \u003d \"file:///home/suket/Documents/FlightData/flights.csv\"\n    val file_type \u003d \"csv\"\n\n    // # CSV options\n    val infer_schema \u003d \"false\"\n    val first_row_is_header \u003d \"true\"\n    val delimiter \u003d \",\"\n",
+      "user": "anonymous",
+      "dateUpdated": "2018-11-05 15:00:56.947",
+      "config": {
+        "colWidth": 12.0,
+        "fontSize": 9.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "editorMode": "ace/mode/scala",
+        "title": false
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "file_location: String \u003d file:///home/suket/Documents/FlightData/flights.csv\nfile_type: String \u003d csv\ninfer_schema: String \u003d false\nfirst_row_is_header: String \u003d true\ndelimiter: String \u003d ,\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1541132492751_232959943",
+      "id": "20181102-095132_2097536769",
+      "dateCreated": "2018-11-02 09:51:32.751",
+      "dateStarted": "2018-11-05 15:00:57.074",
+      "dateFinished": "2018-11-05 15:00:59.259",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "// import org.apache.spark.sql.types._\n\n// val customSchema \u003d StructType(Array(\n       \n//         StructField(\"YEAR\", StringType, true),\n//         StructField(\"DISTANCE\", IntegerType, true),\n//         StructField(\"state\", StringType, true),\n//         StructField(\"latitude\", FloatType, true),\n//         StructField(\"longitude\", FloatType, true),\n//         StructField(\"timezone\", IntegerType, true),\n//         StructField(\"dst\", StringType, true)\n\n//       ))",
+      "user": "anonymous",
+      "dateUpdated": "2018-11-02 13:42:47.635",
+      "config": {
+        "colWidth": 12.0,
+        "fontSize": 9.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": []
+      },
+      "apps": [],
+      "jobName": "paragraph_1541137843693_1944129922",
+      "id": "20181102-112043_496002786",
+      "dateCreated": "2018-11-02 11:20:43.693",
+      "dateStarted": "2018-11-02 13:42:47.666",
+      "dateFinished": "2018-11-02 13:42:47.849",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "title": "Create a DataFrame from CSV file",
+      "text": " // # The applied options are for CSV files. For other file types, these will be ignored.\n    val flights \u003d (spark.read.format(file_type)\n      .option(\"inferSchema\",infer_schema )\n      .option(\"header\", first_row_is_header)\n      .option(\"sep\", delimiter)\n    //   .schema(customSchema)\n      .load(file_location).as[Flight])",
+      "user": "anonymous",
+      "dateUpdated": "2018-11-05 15:01:04.662",
+      "config": {
+        "colWidth": 12.0,
+        "fontSize": 9.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "editorMode": "ace/mode/scala",
+        "title": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "flights: org.apache.spark.sql.Dataset[Flight] \u003d [YEAR: string, MONTH: string ... 29 more fields]\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1541132807211_-1238128835",
+      "id": "20181102-095647_1633188587",
+      "dateCreated": "2018-11-02 09:56:47.211",
+      "dateStarted": "2018-11-05 15:01:04.770",
+      "dateFinished": "2018-11-05 15:01:27.192",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "title": "Print Schema",
+      "text": "flights.printSchema()\n// flights.show()",
+      "user": "anonymous",
+      "dateUpdated": "2018-11-02 13:42:51.626",
+      "config": {
+        "colWidth": 12.0,
+        "fontSize": 9.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "editorMode": "ace/mode/scala",
+        "title": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "root\n |-- YEAR: string (nullable \u003d true)\n |-- MONTH: string (nullable \u003d true)\n |-- DAY: string (nullable \u003d true)\n |-- DAY_OF_WEEK: string (nullable \u003d true)\n |-- AIRLINE: string (nullable \u003d true)\n |-- FLIGHT_NUMBER: string (nullable \u003d true)\n |-- TAIL_NUMBER: string (nullable \u003d true)\n |-- ORIGIN_AIRPORT: string (nullable \u003d true)\n |-- DESTINATION_AIRPORT: string (nullable \u003d true)\n |-- SCHEDULED_DEPARTURE: string (nullable \u003d true)\n |-- DEPARTURE_TIME: string (nullable \u003d true)\n |-- DEPARTURE_DELAY: string (nullable \u003d true)\n |-- TAXI_OUT: string (nullable \u003d true)\n |-- WHEELS_OFF: string (nullable \u003d true)\n |-- SCHEDULED_TIME: string (nullable \u003d true)\n |-- ELAPSED_TIME: string (nullable \u003d true)\n |-- AIR_TIME: string (nullable \u003d true)\n |-- DISTANCE: string (nullable \u003d true)\n |-- WHEELS_ON: string (nullable \u003d true)\n |-- TAXI_IN: string (nullable \u003d true)\n |-- SCHEDULED_ARRIVAL: string (nullable \u003d true)\n |-- ARRIVAL_TIME: string (nullable \u003d true)\n |-- ARRIVAL_DELAY: string (nullable \u003d true)\n |-- DIVERTED: string (nullable \u003d true)\n |-- CANCELLED: string (nullable \u003d true)\n |-- CANCELLATION_REASON: string (nullable \u003d true)\n |-- AIR_SYSTEM_DELAY: string (nullable \u003d true)\n |-- SECURITY_DELAY: string (nullable \u003d true)\n |-- AIRLINE_DELAY: string (nullable \u003d true)\n |-- LATE_AIRCRAFT_DELAY: string (nullable \u003d true)\n |-- WEATHER_DELAY: string (nullable \u003d true)\n\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1541132622044_-507297241",
+      "id": "20181102-095342_2022847753",
+      "dateCreated": "2018-11-02 09:53:42.044",
+      "dateStarted": "2018-11-02 13:42:51.665",
+      "dateFinished": "2018-11-02 13:42:52.053",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "title": "Apply a filter to find flights delayed more than 15 min",
+      "text": "// Create a Dataset containing flights with delayed departure by more than 15 min using \"filter\"\nval delayedFlights \u003d (flights\n                        .select(\"AIRLINE\", \"DEPARTURE_DELAY\")\n                        .filter($\"DEPARTURE_DELAY\" \u003e 15))\n                        \ndelayedFlights.show()",
+      "user": "anonymous",
+      "dateUpdated": "2018-11-02 13:42:52.065",
+      "config": {
+        "colWidth": 12.0,
+        "fontSize": 9.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "editorMode": "ace/mode/scala",
+        "title": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "delayedFlights: org.apache.spark.sql.Dataset[org.apache.spark.sql.Row] \u003d [AIRLINE: string, DEPARTURE_DELAY: string]\n+-------+---------------+\n|AIRLINE|DEPARTURE_DELAY|\n+-------+---------------+\n|     NK|             25|\n|     AA|             21|\n|     NK|             72|\n|     B6|             95|\n|     B6|             72|\n|     AA|            108|\n|     US|             60|\n|     AA|             58|\n|     AA|             53|\n|     UA|             19|\n|     B6|             43|\n|     UA|             56|\n|     DL|            148|\n|     EV|             16|\n|     AA|             55|\n|     DL|             18|\n|     F9|             36|\n|     OO|             73|\n|     UA|             39|\n|     EV|            213|\n+-------+---------------+\nonly showing top 20 rows\n\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1541132648850_1783272054",
+      "id": "20181102-095408_1980850627",
+      "dateCreated": "2018-11-02 09:54:08.850",
+      "dateStarted": "2018-11-02 13:42:52.186",
+      "dateFinished": "2018-11-02 13:42:57.403",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "title": "Display percentage of delayed flights",
+      "text": "val numTotalFlights \u003d flights.count()\nval numDelayedFlights \u003d delayedFlights.count()\n\n// Print total number of delayed flights\nprintln(\"Percentage of Delayed Flights: \" + (numDelayedFlights.toFloat/numTotalFlights*100) + \"%\")",
+      "user": "anonymous",
+      "dateUpdated": "2018-11-02 13:42:57.484",
+      "config": {
+        "colWidth": 12.0,
+        "fontSize": 9.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {},
+        "editorHide": false,
+        "tableHide": false,
+        "title": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "numTotalFlights: Long \u003d 5819079\nnumDelayedFlights: Long \u003d 1018558\nPercentage of Delayed Flights: 17.503767%\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1541136309436_1326628554",
+      "id": "20181102-105509_19140123",
+      "dateCreated": "2018-11-02 10:55:09.464",
+      "dateStarted": "2018-11-02 13:42:57.514",
+      "dateFinished": "2018-11-02 13:43:26.010",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "title": " Create a UDF to determine delays",
+      "text": "import org.apache.spark.sql.functions.udf\n\n// Define a UDF to find delayed flights\n\n// Assume:\n//  if ArrDelay is not available then Delayed \u003d False\n//  if ArrDelay \u003e 15 min then Delayed \u003d True else False\n\nval isDelayedUDF \u003d udf((DEPARTURE_DELAY: String) \u003d\u003e { \n                 try {\n        if (DEPARTURE_DELAY.trim \u003d\u003d \"null\") 0 \n                else if (DEPARTURE_DELAY.trim.toInt \u003e 15) 1 \n                else 0\n      } catch {\n         case _  : Throwable \u003d\u003e{\n           0\n         }\n         \n         \n      }\n                \n    \n})",
+      "user": "anonymous",
+      "dateUpdated": "2018-11-02 13:43:26.050",
+      "config": {
+        "colWidth": 12.0,
+        "fontSize": 9.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "editorMode": "ace/mode/scala",
+        "title": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "import org.apache.spark.sql.functions.udf\nisDelayedUDF: org.apache.spark.sql.expressions.UserDefinedFunction \u003d UserDefinedFunction(\u003cfunction1\u003e,IntegerType,Some(List(StringType)))\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1541136353554_-1287416994",
+      "id": "20181102-105553_1355189558",
+      "dateCreated": "2018-11-02 10:55:53.554",
+      "dateStarted": "2018-11-02 13:43:26.086",
+      "dateFinished": "2018-11-02 13:43:26.851",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "title": "Create a new DataFrame with IsDelayed column",
+      "text": "val flightsWithDelays \u003d flights.select($\"YEAR\", $\"MONTH\", $\"AIRLINE\", $\"FLIGHT_NUMBER\", $\"ORIGIN_AIRPORT\", $\"DEPARTURE_DELAY\", \n                    isDelayedUDF($\"DEPARTURE_DELAY\").alias(\"IsDelayed\"))\n                    \nflightsWithDelays.show(5)",
+      "user": "anonymous",
+      "dateUpdated": "2018-11-02 13:43:26.885",
+      "config": {
+        "colWidth": 12.0,
+        "fontSize": 9.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "editorMode": "ace/mode/scala",
+        "title": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "flightsWithDelays: org.apache.spark.sql.DataFrame \u003d [YEAR: string, MONTH: string ... 5 more fields]\n+----+-----+-------+-------------+--------------+---------------+---------+\n|YEAR|MONTH|AIRLINE|FLIGHT_NUMBER|ORIGIN_AIRPORT|DEPARTURE_DELAY|IsDelayed|\n+----+-----+-------+-------------+--------------+---------------+---------+\n|2015|    1|     AS|           98|           ANC|            -11|        0|\n|2015|    1|     AA|         2336|           LAX|             -8|        0|\n|2015|    1|     US|          840|           SFO|             -2|        0|\n|2015|    1|     AA|          258|           LAX|             -5|        0|\n|2015|    1|     AS|          135|           SEA|             -1|        0|\n+----+-----+-------+-------------+--------------+---------------+---------+\nonly showing top 5 rows\n\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1541139529073_496541041",
+      "id": "20181102-114849_1411988905",
+      "dateCreated": "2018-11-02 11:48:49.073",
+      "dateStarted": "2018-11-02 13:43:26.975",
+      "dateFinished": "2018-11-02 13:43:34.023",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "title": "Calculate percentage of delayed flights using flightsWithDelays DataFrame",
+      "text": "flightsWithDelays.agg((sum(\"IsDelayed\") * 100 / count(\"DEPARTURE_DELAY\")).alias(\"Percentage of Delayed Flights\")).show()",
+      "user": "anonymous",
+      "dateUpdated": "2018-11-02 13:43:34.084",
+      "config": {
+        "colWidth": 12.0,
+        "fontSize": 9.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "editorMode": "ace/mode/scala",
+        "title": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "+-----------------------------+\n|Percentage of Delayed Flights|\n+-----------------------------+\n|           17.766808781414586|\n+-----------------------------+\n\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1541141172222_1538187491",
+      "id": "20181102-121612_1646751899",
+      "dateCreated": "2018-11-02 12:16:12.222",
+      "dateStarted": "2018-11-02 13:43:34.130",
+      "dateFinished": "2018-11-02 13:43:49.758",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "title": "Find Avg Taxi-in",
+      "text": "(flights.select(\"ORIGIN_AIRPORT\", \"DESTINATION_AIRPORT\", \"TAXI_IN\")\n        .groupBy(\"ORIGIN_AIRPORT\", \"DESTINATION_AIRPORT\")\n        .agg(avg(\"TAXI_IN\")\n        .alias(\"AVG_TAXI_IN\"))\n        .orderBy(desc(\"AVG_TAXI_IN\"))\n        .show(10))",
+      "user": "anonymous",
+      "dateUpdated": "2018-11-02 13:43:49.845",
+      "config": {
+        "colWidth": 6.0,
+        "fontSize": 9.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "editorMode": "ace/mode/scala",
+        "title": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "+--------------+-------------------+------------------+\n|ORIGIN_AIRPORT|DESTINATION_AIRPORT|       AVG_TAXI_IN|\n+--------------+-------------------+------------------+\n|           CID|                LAX|              35.0|\n|           SGF|                CLT| 24.86725663716814|\n|         13796|              12266|20.161290322580644|\n|         12441|              13930|              20.0|\n|           EYW|                LGA|              20.0|\n|           MQT|                ORD|19.715827338129497|\n|           SUX|                ORD|19.642978003384094|\n|         15024|              11697|19.444444444444443|\n|           MSN|                MCO|            19.125|\n|         14262|              13930|19.037037037037038|\n+--------------+-------------------+------------------+\nonly showing top 10 rows\n\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1541141551911_525831843",
+      "id": "20181102-122231_834939348",
+      "dateCreated": "2018-11-02 12:22:31.911",
+      "dateStarted": "2018-11-02 13:43:49.887",
+      "dateFinished": "2018-11-02 13:44:08.704",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "title": "Find Avg Taxi-Out",
+      "text": "(flights.select(\"ORIGIN_AIRPORT\", \"DESTINATION_AIRPORT\", \"TAXI_OUT\")\n        .groupBy(\"ORIGIN_AIRPORT\", \"DESTINATION_AIRPORT\")\n        .agg(avg(\"TAXI_OUT\")\n        .alias(\"AVG_TAXI_OUT\"))\n        .orderBy(desc(\"AVG_TAXI_OUT\"))\n        .show(10))",
+      "user": "anonymous",
+      "dateUpdated": "2018-11-02 13:44:08.722",
+      "config": {
+        "colWidth": 6.0,
+        "fontSize": 9.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "editorMode": "ace/mode/scala",
+        "title": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "+--------------+-------------------+-----------------+\n|ORIGIN_AIRPORT|DESTINATION_AIRPORT|     AVG_TAXI_OUT|\n+--------------+-------------------+-----------------+\n|           LGA|                EYW|             76.0|\n|           IAD|                TTN|             69.0|\n|           SWF|                LGA|             58.0|\n|         12953|              11996|             51.0|\n|         11423|              13487|             48.0|\n|           DEN|                PIA|            47.25|\n|           LGA|                DSM|             44.0|\n|         11278|              11193|             43.0|\n|         12953|              13871|            42.32|\n|           MSO|                SEA|38.69230769230769|\n+--------------+-------------------+-----------------+\nonly showing top 10 rows\n\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1541143496793_40571729",
+      "id": "20181102-125456_1238335874",
+      "dateCreated": "2018-11-02 12:54:56.793",
+      "dateStarted": "2018-11-02 13:44:08.773",
+      "dateFinished": "2018-11-02 13:44:26.840",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "title": "Register a Temporary View",
+      "text": "\n// Convert flights DataFrame to a temporary view\nflights.createOrReplaceTempView(\"flightsView\")",
+      "user": "anonymous",
+      "dateUpdated": "2018-11-02 13:44:26.891",
+      "config": {
+        "colWidth": 12.0,
+        "fontSize": 9.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "editorMode": "ace/mode/scala",
+        "title": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": []
+      },
+      "apps": [],
+      "jobName": "paragraph_1541143651467_489533547",
+      "id": "20181102-125731_1787541473",
+      "dateCreated": "2018-11-02 12:57:31.467",
+      "dateStarted": "2018-11-02 13:44:26.986",
+      "dateFinished": "2018-11-02 13:44:27.438",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "title": "Preview Data in an interactive table format",
+      "text": "%spark.sql\n\nSELECT * FROM flightsView LIMIT 20",
+      "user": "anonymous",
+      "dateUpdated": "2018-11-02 13:45:52.530",
+      "config": {
+        "colWidth": 12.0,
+        "fontSize": 9.0,
+        "enabled": true,
+        "results": {
+          "0": {
+            "graph": {
+              "mode": "table",
+              "height": 300.0,
+              "optionOpen": false,
+              "setting": {
+                "table": {
+                  "tableGridState": {},
+                  "tableColumnTypeState": {
+                    "names": {
+                      "YEAR": "string",
+                      "MONTH": "string",
+                      "DAY": "string",
+                      "DAY_OF_WEEK": "string",
+                      "AIRLINE": "string",
+                      "FLIGHT_NUMBER": "string",
+                      "TAIL_NUMBER": "string",
+                      "ORIGIN_AIRPORT": "string",
+                      "DESTINATION_AIRPORT": "string",
+                      "SCHEDULED_DEPARTURE": "string",
+                      "DEPARTURE_TIME": "string",
+                      "DEPARTURE_DELAY": "string",
+                      "TAXI_OUT": "string",
+                      "WHEELS_OFF": "string",
+                      "SCHEDULED_TIME": "string",
+                      "ELAPSED_TIME": "string",
+                      "AIR_TIME": "string",
+                      "DISTANCE": "string",
+                      "WHEELS_ON": "string",
+                      "TAXI_IN": "string",
+                      "SCHEDULED_ARRIVAL": "string",
+                      "ARRIVAL_TIME": "string",
+                      "ARRIVAL_DELAY": "string",
+                      "DIVERTED": "string",
+                      "CANCELLED": "string",
+                      "CANCELLATION_REASON": "string",
+                      "AIR_SYSTEM_DELAY": "string",
+                      "SECURITY_DELAY": "string",
+                      "AIRLINE_DELAY": "string",
+                      "LATE_AIRCRAFT_DELAY": "string",
+                      "WEATHER_DELAY": "string"
+                    },
+                    "updated": false
+                  },
+                  "tableOptionSpecHash": "[{\"name\":\"useFilter\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable filter for columns\"},{\"name\":\"showPagination\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable pagination for better navigation\"},{\"name\":\"showAggregationFooter\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable a footer for displaying aggregated values\"}]",
+                  "tableOptionValue": {
+                    "useFilter": false,
+                    "showPagination": false,
+                    "showAggregationFooter": false
+                  },
+                  "updated": false,
+                  "initialized": false
+                },
+                "multiBarChart": {
+                  "rotate": {
+                    "degree": "-45"
+                  },
+                  "xLabelStatus": "default"
+                }
+              },
+              "commonSetting": {},
+              "keys": [
+                {
+                  "name": "YEAR",
+                  "index": 0.0,
+                  "aggr": "sum"
+                }
+              ],
+              "groups": [],
+              "values": [
+                {
+                  "name": "MONTH",
+                  "index": 1.0,
+                  "aggr": "sum"
+                }
+              ]
+            },
+            "helium": {}
+          }
+        },
+        "editorSetting": {
+          "language": "sql",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "editorMode": "ace/mode/sql",
+        "title": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TABLE",
+            "data": "YEAR\tMONTH\tDAY\tDAY_OF_WEEK\tAIRLINE\tFLIGHT_NUMBER\tTAIL_NUMBER\tORIGIN_AIRPORT\tDESTINATION_AIRPORT\tSCHEDULED_DEPARTURE\tDEPARTURE_TIME\tDEPARTURE_DELAY\tTAXI_OUT\tWHEELS_OFF\tSCHEDULED_TIME\tELAPSED_TIME\tAIR_TIME\tDISTANCE\tWHEELS_ON\tTAXI_IN\tSCHEDULED_ARRIVAL\tARRIVAL_TIME\tARRIVAL_DELAY\tDIVERTED\tCANCELLED\tCANCELLATION_REASON\tAIR_SYSTEM_DELAY\tSECURITY_DELAY\tAIRLINE_DELAY\tLATE_AIRCRAFT_DELAY\tWEATHER_DELAY\n2015\t1\t1\t4\tAS\t98\tN407AS\tANC\tSEA\t0005\t2354\t-11\t21\t0015\t205\t194\t169\t1448\t0404\t4\t0430\t0408\t-22\t0\t0\tnull\tnull\tnull\tnull\tnull\tnull\n2015\t1\t1\t4\tAA\t2336\tN3KUAA\tLAX\tPBI\t0010\t0002\t-8\t12\t0014\t280\t279\t263\t2330\t0737\t4\t0750\t0741\t-9\t0\t0\tnull\tnull\tnull\tnull\tnull\tnull\n2015\t1\t1\t4\tUS\t840\tN171US\tSFO\tCLT\t0020\t0018\t-2\t16\t0034\t286\t293\t266\t2296\t0800\t11\t0806\t0811\t5\t0\t0\tnull\tnull\tnull\tnull\tnull\tnull\n2015\t1\t1\t4\tAA\t258\tN3HYAA\tLAX\tMIA\t0020\t0015\t-5\t15\t0030\t285\t281\t258\t2342\t0748\t8\t0805\t0756\t-9\t0\t0\tnull\tnull\tnull\tnull\tnull\tnull\n2015\t1\t1\t4\tAS\t135\tN527AS\tSEA\tANC\t0025\t0024\t-1\t11\t0035\t235\t215\t199\t1448\t0254\t5\t0320\t0259\t-21\t0\t0\tnull\tnull\tnull\tnull\tnull\tnull\n2015\t1\t1\t4\tDL\t806\tN3730B\tSFO\tMSP\t0025\t0020\t-5\t18\t0038\t217\t230\t206\t1589\t0604\t6\t0602\t0610\t8\t0\t0\tnull\tnull\tnull\tnull\tnull\tnull\n2015\t1\t1\t4\tNK\t612\tN635NK\tLAS\tMSP\t0025\t0019\t-6\t11\t0030\t181\t170\t154\t1299\t0504\t5\t0526\t0509\t-17\t0\t0\tnull\tnull\tnull\tnull\tnull\tnull\n2015\t1\t1\t4\tUS\t2013\tN584UW\tLAX\tCLT\t0030\t0044\t14\t13\t0057\t273\t249\t228\t2125\t0745\t8\t0803\t0753\t-10\t0\t0\tnull\tnull\tnull\tnull\tnull\tnull\n2015\t1\t1\t4\tAA\t1112\tN3LAAA\tSFO\tDFW\t0030\t0019\t-11\t17\t0036\t195\t193\t173\t1464\t0529\t3\t0545\t0532\t-13\t0\t0\tnull\tnull\tnull\tnull\tnull\tnull\n2015\t1\t1\t4\tDL\t1173\tN826DN\tLAS\tATL\t0030\t0033\t3\t12\t0045\t221\t203\t186\t1747\t0651\t5\t0711\t0656\t-15\t0\t0\tnull\tnull\tnull\tnull\tnull\tnull\n2015\t1\t1\t4\tDL\t2336\tN958DN\tDEN\tATL\t0030\t0024\t-6\t12\t0036\t173\t149\t133\t1199\t0449\t4\t0523\t0453\t-30\t0\t0\tnull\tnull\tnull\tnull\tnull\tnull\n2015\t1\t1\t4\tAA\t1674\tN853AA\tLAS\tMIA\t0035\t0027\t-8\t21\t0048\t268\t266\t238\t2174\t0746\t7\t0803\t0753\t-10\t0\t0\tnull\tnull\tnull\tnull\tnull\tnull\n2015\t1\t1\t4\tDL\t1434\tN547US\tLAX\tMSP\t0035\t0035\t0\t18\t0053\t214\t210\t188\t1535\t0601\t4\t0609\t0605\t-4\t0\t0\tnull\tnull\tnull\tnull\tnull\tnull\n2015\t1\t1\t4\tDL\t2324\tN3751B\tSLC\tATL\t0040\t0034\t-6\t18\t0052\t215\t199\t176\t1590\t0548\t5\t0615\t0553\t-22\t0\t0\tnull\tnull\tnull\tnull\tnull\tnull\n2015\t1\t1\t4\tDL\t2440\tN651DL\tSEA\tMSP\t0040\t0039\t-1\t28\t0107\t189\t198\t166\t1399\t0553\t4\t0549\t0557\t8\t0\t0\tnull\tnull\tnull\tnull\tnull\tnull\n2015\t1\t1\t4\tAS\t108\tN309AS\tANC\tSEA\t0045\t0041\t-4\t17\t0058\t204\t194\t173\t1448\t0451\t4\t0509\t0455\t-14\t0\t0\tnull\tnull\tnull\tnull\tnull\tnull\n2015\t1\t1\t4\tDL\t1560\tN3743H\tANC\tSEA\t0045\t0031\t-14\t25\t0056\t210\t200\t171\t1448\t0447\t4\t0515\t0451\t-24\t0\t0\tnull\tnull\tnull\tnull\tnull\tnull\n2015\t1\t1\t4\tUA\t1197\tN78448\tSFO\tIAH\t0048\t0042\t-6\t11\t0053\t218\t217\t199\t1635\t0612\t7\t0626\t0619\t-7\t0\t0\tnull\tnull\tnull\tnull\tnull\tnull\n2015\t1\t1\t4\tAS\t122\tN413AS\tANC\tPDX\t0050\t0046\t-4\t11\t0057\t215\t201\t187\t1542\t0504\t3\t0525\t0507\t-18\t0\t0\tnull\tnull\tnull\tnull\tnull\tnull\n2015\t1\t1\t4\tDL\t1670\tN806DN\tPDX\tMSP\t0050\t0045\t-5\t9\t0054\t193\t186\t171\t1426\t0545\t6\t0603\t0551\t-12\t0\t0\tnull\tnull\tnull\tnull\tnull\tnull\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1541144220079_-646057162",
+      "id": "20181102-130700_208101195",
+      "dateCreated": "2018-11-02 13:07:00.079",
+      "dateStarted": "2018-11-02 13:44:27.524",
+      "dateFinished": "2018-11-02 13:44:39.144",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "title": "Register a User Defined Function (UDF)",
+      "text": "\n// Register a helper UDF to find delayed flights\n// Note that this is a UDF specific for use with the sparkSession\n\n// Assume:\n//  if ArrDelay is not available then Delayed \u003d False\n//  if ArrDelay \u003e 15 min then Delayed \u003d True else False\n\nval isDelayedUDF \u003d (DEPARTURE_DELAY: String) \u003d\u003e { \n                 try {\n        if (DEPARTURE_DELAY.trim \u003d\u003d \"null\") 0 \n                else if (DEPARTURE_DELAY.trim.toInt \u003e 15) 1 \n                else 0\n      } catch {\n         case _  : Throwable \u003d\u003e{\n           0\n         }\n         \n         \n      }\n                \n    \n}\n\nspark.udf.register(\"isDelayedUDF\", isDelayedUDF )",
+      "user": "anonymous",
+      "dateUpdated": "2018-11-02 13:44:39.233",
+      "config": {
+        "colWidth": 12.0,
+        "fontSize": 9.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "editorMode": "ace/mode/scala",
+        "title": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "isDelayedUDF: String \u003d\u003e Int \u003d \u003cfunction1\u003e\nres307: org.apache.spark.sql.expressions.UserDefinedFunction \u003d UserDefinedFunction(\u003cfunction1\u003e,IntegerType,Some(List(StringType)))\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1541144257972_2078717887",
+      "id": "20181102-130737_1895612082",
+      "dateCreated": "2018-11-02 13:07:37.972",
+      "dateStarted": "2018-11-02 13:44:39.266",
+      "dateFinished": "2018-11-02 13:44:40.497",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "flights.columns",
+      "user": "anonymous",
+      "dateUpdated": "2018-11-02 13:44:40.567",
+      "config": {
+        "colWidth": 12.0,
+        "fontSize": 9.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "res309: Array[String] \u003d Array(YEAR, MONTH, DAY, DAY_OF_WEEK, AIRLINE, FLIGHT_NUMBER, TAIL_NUMBER, ORIGIN_AIRPORT, DESTINATION_AIRPORT, SCHEDULED_DEPARTURE, DEPARTURE_TIME, DEPARTURE_DELAY, TAXI_OUT, WHEELS_OFF, SCHEDULED_TIME, ELAPSED_TIME, AIR_TIME, DISTANCE, WHEELS_ON, TAXI_IN, SCHEDULED_ARRIVAL, ARRIVAL_TIME, ARRIVAL_DELAY, DIVERTED, CANCELLED, CANCELLATION_REASON, AIR_SYSTEM_DELAY, SECURITY_DELAY, AIRLINE_DELAY, LATE_AIRCRAFT_DELAY, WEATHER_DELAY)\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1541144628708_-735898648",
+      "id": "20181102-131348_16926639",
+      "dateCreated": "2018-11-02 13:13:48.708",
+      "dateStarted": "2018-11-02 13:44:40.621",
+      "dateFinished": "2018-11-02 13:44:41.002",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "title": "Compare Total Number of Delayed Flights by Carrier",
+      "text": "%spark.sql\n--- Compare Total Number of Delayed Flights by Carrier\nSELECT AIRLINE, SUM(isDelayedUDF(DEPARTURE_DELAY)) AS NumDelays FROM flightsView GROUP BY AIRLINE",
+      "user": "anonymous",
+      "dateUpdated": "2018-11-02 13:44:41.020",
+      "config": {
+        "colWidth": 6.0,
+        "fontSize": 9.0,
+        "enabled": true,
+        "results": {
+          "0": {
+            "graph": {
+              "mode": "pieChart",
+              "height": 300.0,
+              "optionOpen": false,
+              "setting": {
+                "table": {
+                  "tableGridState": {},
+                  "tableColumnTypeState": {
+                    "names": {
+                      "AIRLINE": "string",
+                      "NumDelays": "string"
+                    },
+                    "updated": false
+                  },
+                  "tableOptionSpecHash": "[{\"name\":\"useFilter\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable filter for columns\"},{\"name\":\"showPagination\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable pagination for better navigation\"},{\"name\":\"showAggregationFooter\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable a footer for displaying aggregated values\"}]",
+                  "tableOptionValue": {
+                    "useFilter": false,
+                    "showPagination": false,
+                    "showAggregationFooter": false
+                  },
+                  "updated": false,
+                  "initialized": false
+                }
+              },
+              "commonSetting": {}
+            },
+            "helium": {}
+          }
+        },
+        "editorSetting": {
+          "language": "sql",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "editorMode": "ace/mode/sql",
+        "title": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TABLE",
+            "data": "AIRLINE\tNumDelays\nUA\t116153\nNK\t30641\nAA\t119456\nEV\t94024\nB6\t55779\nDL\t118136\nOO\t93665\nF9\t20154\nUS\t28053\nMQ\t54572\nHA\t5234\nAS\t17923\nVX\t10630\nWN\t254138\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1541144443651_878846459",
+      "id": "20181102-131043_1572925420",
+      "dateCreated": "2018-11-02 13:10:43.651",
+      "dateStarted": "2018-11-02 13:44:41.104",
+      "dateFinished": "2018-11-02 13:45:00.174",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "title": "Compare Total Delayed Time (min) by Carrier",
+      "text": "%spark.sql\n--- Compare Total Delayed Time (min) by Carrier\nSELECT AIRLINE, SUM(DEPARTURE_DELAY) AS TotalTimeDelay FROM flightsView GROUP BY AIRLINE",
+      "user": "anonymous",
+      "dateUpdated": "2018-11-11 13:01:29.568",
+      "config": {
+        "colWidth": 6.0,
+        "fontSize": 9.0,
+        "enabled": true,
+        "results": {
+          "0": {
+            "graph": {
+              "mode": "multiBarChart",
+              "height": 304.0,
+              "optionOpen": false,
+              "setting": {
+                "table": {
+                  "tableGridState": {},
+                  "tableColumnTypeState": {
+                    "names": {
+                      "AIRLINE": "string",
+                      "TotalTimeDelay": "string"
+                    },
+                    "updated": false
+                  },
+                  "tableOptionSpecHash": "[{\"name\":\"useFilter\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable filter for columns\"},{\"name\":\"showPagination\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable pagination for better navigation\"},{\"name\":\"showAggregationFooter\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable a footer for displaying aggregated values\"}]",
+                  "tableOptionValue": {
+                    "useFilter": false,
+                    "showPagination": false,
+                    "showAggregationFooter": false
+                  },
+                  "updated": false,
+                  "initialized": false
+                },
+                "multiBarChart": {
+                  "rotate": {
+                    "degree": "-45"
+                  },
+                  "xLabelStatus": "default",
+                  "stacked": true
+                },
+                "stackedAreaChart": {
+                  "rotate": {
+                    "degree": "-45"
+                  },
+                  "xLabelStatus": "default"
+                },
+                "lineChart": {
+                  "rotate": {
+                    "degree": "-45"
+                  },
+                  "xLabelStatus": "default"
+                }
+              },
+              "commonSetting": {},
+              "keys": [
+                {
+                  "name": "AIRLINE",
+                  "index": 0.0,
+                  "aggr": "sum"
+                }
+              ],
+              "groups": [
+                {
+                  "name": "AIRLINE",
+                  "index": 0.0,
+                  "aggr": "sum"
+                }
+              ],
+              "values": [
+                {
+                  "name": "TotalTimeDelay",
+                  "index": 1.0,
+                  "aggr": "sum"
+                }
+              ]
+            },
+            "helium": {}
+          }
+        },
+        "editorSetting": {
+          "language": "sql",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "editorMode": "ace/mode/sql",
+        "title": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TABLE",
+            "data": "AIRLINE\tTotalTimeDelay\nUA\t7355348.0\nNK\t1840887.0\nAA\t6369435.0\nEV\t4857338.0\nB6\t3026467.0\nDL\t6427294.0\nOO\t4517510.0\nF9\t1205449.0\nUS\t1196447.0\nMQ\t2837908.0\nHA\t36972.0\nAS\t306997.0\nVX\t553852.0\nWN\t1.318652E7\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1541144731793_-1261966179",
+      "id": "20181102-131531_1945176534",
+      "dateCreated": "2018-11-02 13:15:31.794",
+      "dateStarted": "2018-11-02 13:45:00.355",
+      "dateFinished": "2018-11-02 13:45:17.369",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "title": "Find Average Distance Travelled by Carrier",
+      "text": "%spark.sql\n--- Find Average Distance Travelled by Carrier\nSELECT AIRLINE, avg(DISTANCE) AS AvgDistanceTraveled FROM flightsView GROUP BY AIRLINE ORDER BY AvgDistanceTraveled DESC",
+      "user": "anonymous",
+      "dateUpdated": "2018-11-11 13:01:29.916",
+      "config": {
+        "colWidth": 12.0,
+        "fontSize": 9.0,
+        "enabled": true,
+        "results": {
+          "0": {
+            "graph": {
+              "mode": "multiBarChart",
+              "height": 300.0,
+              "optionOpen": false,
+              "setting": {
+                "table": {
+                  "tableGridState": {},
+                  "tableColumnTypeState": {
+                    "names": {
+                      "AIRLINE": "string",
+                      "AvgDistanceTraveled": "string"
+                    },
+                    "updated": false
+                  },
+                  "tableOptionSpecHash": "[{\"name\":\"useFilter\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable filter for columns\"},{\"name\":\"showPagination\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable pagination for better navigation\"},{\"name\":\"showAggregationFooter\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable a footer for displaying aggregated values\"}]",
+                  "tableOptionValue": {
+                    "useFilter": false,
+                    "showPagination": false,
+                    "showAggregationFooter": false
+                  },
+                  "updated": false,
+                  "initialized": false
+                },
+                "lineChart": {
+                  "rotate": {
+                    "degree": "-45"
+                  },
+                  "xLabelStatus": "default"
+                },
+                "stackedAreaChart": {
+                  "rotate": {
+                    "degree": "-45"
+                  },
+                  "xLabelStatus": "default",
+                  "style": "stack"
+                },
+                "multiBarChart": {
+                  "rotate": {
+                    "degree": "-45"
+                  },
+                  "xLabelStatus": "default",
+                  "stacked": true
+                }
+              },
+              "commonSetting": {},
+              "keys": [
+                {
+                  "name": "AIRLINE",
+                  "index": 0.0,
+                  "aggr": "sum"
+                }
+              ],
+              "groups": [
+                {
+                  "name": "AIRLINE",
+                  "index": 0.0,
+                  "aggr": "sum"
+                }
+              ],
+              "values": [
+                {
+                  "name": "AvgDistanceTraveled",
+                  "index": 1.0,
+                  "aggr": "sum"
+                }
+              ]
+            },
+            "helium": {}
+          }
+        },
+        "editorSetting": {
+          "language": "sql",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "editorMode": "ace/mode/sql",
+        "title": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TABLE",
+            "data": "AIRLINE\tAvgDistanceTraveled\nVX\t1405.9893220037802\nUA\t1271.5456844081027\nAS\t1197.4180824363411\nB6\t1062.1751782451095\nAA\t1041.3392223520077\nNK\t985.2671176275143\nF9\t967.2148597472368\nUS\t911.5038623153763\nDL\t853.6218253392869\nWN\t740.7113345035682\nHA\t632.5918423536816\nOO\t496.7721639899856\nEV\t462.25173914335716\nMQ\t422.31540701621003\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1541144863237_1927953449",
+      "id": "20181102-131743_1827279121",
+      "dateCreated": "2018-11-02 13:17:43.237",
+      "dateStarted": "2018-11-02 13:45:17.478",
+      "dateFinished": "2018-11-02 13:45:34.627",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "title": "Find Out When Most Flights Get Delayed by Day of Week",
+      "text": "%spark.sql\n\nSELECT DAY_OF_WEEK, CASE WHEN isDelayedUDF(DEPARTURE_DELAY) \u003d 1 THEN \u0027delayed\u0027 ELSE \u0027ok\u0027 END AS Delay, COUNT(1) AS Count\nFROM flightsView\nGROUP BY DAY_OF_WEEK, CASE WHEN isDelayedUDF(DEPARTURE_DELAY) \u003d 1 THEN \u0027delayed\u0027 ELSE \u0027ok\u0027 END\nORDER BY DAY_OF_WEEK\n",
+      "user": "anonymous",
+      "dateUpdated": "2018-11-11 13:01:30.371",
+      "config": {
+        "colWidth": 12.0,
+        "fontSize": 9.0,
+        "enabled": true,
+        "results": {
+          "0": {
+            "graph": {
+              "mode": "multiBarChart",
+              "height": 300.0,
+              "optionOpen": false,
+              "setting": {
+                "table": {
+                  "tableGridState": {},
+                  "tableColumnTypeState": {
+                    "names": {
+                      "DAY_OF_WEEK": "string",
+                      "Delay": "string",
+                      "Count": "string"
+                    },
+                    "updated": false
+                  },
+                  "tableOptionSpecHash": "[{\"name\":\"useFilter\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable filter for columns\"},{\"name\":\"showPagination\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable pagination for better navigation\"},{\"name\":\"showAggregationFooter\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable a footer for displaying aggregated values\"}]",
+                  "tableOptionValue": {
+                    "useFilter": false,
+                    "showPagination": false,
+                    "showAggregationFooter": false
+                  },
+                  "updated": false,
+                  "initialized": false
+                },
+                "multiBarChart": {
+                  "rotate": {
+                    "degree": "-45"
+                  },
+                  "xLabelStatus": "default",
+                  "stacked": false
+                },
+                "stackedAreaChart": {
+                  "rotate": {
+                    "degree": "-45"
+                  },
+                  "xLabelStatus": "default"
+                },
+                "lineChart": {
+                  "rotate": {
+                    "degree": "-45"
+                  },
+                  "xLabelStatus": "default"
+                }
+              },
+              "commonSetting": {},
+              "keys": [
+                {
+                  "name": "DAY_OF_WEEK",
+                  "index": 0.0,
+                  "aggr": "sum"
+                }
+              ],
+              "groups": [
+                {
+                  "name": "Delay",
+                  "index": 1.0,
+                  "aggr": "sum"
+                }
+              ],
+              "values": [
+                {
+                  "name": "Count",
+                  "index": 2.0,
+                  "aggr": "sum"
+                }
+              ]
+            },
+            "helium": {}
+          }
+        },
+        "editorSetting": {
+          "language": "sql",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "editorMode": "ace/mode/sql",
+        "title": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TABLE",
+            "data": "DAY_OF_WEEK\tDelay\tCount\n1\tok\t705538\n1\tdelayed\t160005\n2\tok\t700112\n2\tdelayed\t144488\n3\tdelayed\t145434\n3\tok\t710463\n4\tdelayed\t160435\n4\tok\t712086\n5\tdelayed\t155343\n5\tok\t706866\n6\tdelayed\t109389\n6\tok\t591156\n7\tok\t674300\n7\tdelayed\t143464\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1541145138179_-159197214",
+      "id": "20181102-132218_319338924",
+      "dateCreated": "2018-11-02 13:22:18.179",
+      "dateStarted": "2018-11-02 13:45:34.740",
+      "dateFinished": "2018-11-02 13:45:52.386",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "title": "Find Out When Most Flights Get Delayed by Hour",
+      "text": "%spark.sql\n\nSELECT CAST(DEPARTURE_TIME / 100 AS INT) AS Hour, CASE WHEN isDelayedUDF(DEPARTURE_DELAY) \u003d 1 THEN \u0027delayed\u0027 ELSE \u0027ok\u0027 END AS Delay, COUNT(1) AS Count\nFROM flightsView\nGROUP BY CAST(DEPARTURE_TIME / 100 AS INT), CASE WHEN isDelayedUDF(DEPARTURE_DELAY) \u003d 1 THEN \u0027delayed\u0027 ELSE \u0027ok\u0027 END\nORDER BY Hour",
+      "user": "anonymous",
+      "dateUpdated": "2018-11-11 13:01:30.624",
+      "config": {
+        "colWidth": 12.0,
+        "fontSize": 9.0,
+        "enabled": true,
+        "results": {
+          "0": {
+            "graph": {
+              "mode": "stackedAreaChart",
+              "height": 300.0,
+              "optionOpen": false,
+              "setting": {
+                "table": {
+                  "tableGridState": {},
+                  "tableColumnTypeState": {
+                    "names": {
+                      "Hour": "string",
+                      "Delay": "string",
+                      "Count": "string"
+                    },
+                    "updated": false
+                  },
+                  "tableOptionSpecHash": "[{\"name\":\"useFilter\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable filter for columns\"},{\"name\":\"showPagination\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable pagination for better navigation\"},{\"name\":\"showAggregationFooter\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable a footer for displaying aggregated values\"}]",
+                  "tableOptionValue": {
+                    "useFilter": false,
+                    "showPagination": false,
+                    "showAggregationFooter": false
+                  },
+                  "updated": false,
+                  "initialized": false
+                },
+                "multiBarChart": {
+                  "rotate": {
+                    "degree": "-45"
+                  },
+                  "xLabelStatus": "default"
+                },
+                "stackedAreaChart": {
+                  "rotate": {
+                    "degree": "-45"
+                  },
+                  "xLabelStatus": "default",
+                  "style": "stack"
+                }
+              },
+              "commonSetting": {},
+              "keys": [
+                {
+                  "name": "Hour",
+                  "index": 0.0,
+                  "aggr": "sum"
+                }
+              ],
+              "groups": [
+                {
+                  "name": "Delay",
+                  "index": 1.0,
+                  "aggr": "sum"
+                }
+              ],
+              "values": [
+                {
+                  "name": "Count",
+                  "index": 2.0,
+                  "aggr": "sum"
+                }
+              ]
+            },
+            "helium": {}
+          }
+        },
+        "editorSetting": {
+          "language": "sql",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "editorMode": "ace/mode/sql",
+        "title": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TABLE",
+            "data": "Hour\tDelay\tCount\nnull\tok\t86153\n0\tok\t13931\n0\tdelayed\t11248\n1\tok\t4472\n1\tdelayed\t4373\n2\tok\t1022\n2\tdelayed\t1409\n3\tok\t579\n3\tdelayed\t515\n4\tok\t9947\n4\tdelayed\t252\n5\tdelayed\t1804\n5\tok\t193700\n6\tok\t351013\n6\tdelayed\t12987\n7\tok\t327872\n7\tdelayed\t23276\n8\tdelayed\t30493\n8\tok\t325219\n9\tok\t297339\n9\tdelayed\t39201\n10\tok\t312965\n10\tdelayed\t45952\n11\tdelayed\t51869\n11\tok\t296446\n12\tdelayed\t56247\n12\tok\t288639\n13\tok\t288252\n13\tdelayed\t58633\n14\tok\t261135\n14\tdelayed\t65737\n15\tdelayed\t70129\n15\tok\t280601\n16\tok\t258595\n16\tdelayed\t72387\n17\tok\t286677\n17\tdelayed\t78161\n18\tdelayed\t84739\n18\tok\t240921\n19\tdelayed\t85679\n19\tok\t241749\n20\tok\t181747\n20\tdelayed\t82553\n21\tdelayed\t65130\n21\tok\t135823\n22\tok\t83779\n22\tdelayed\t50206\n23\tdelayed\t25360\n23\tok\t31650\n24\tok\t295\n24\tdelayed\t218\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1541145464247_-304733171",
+      "id": "20181102-132744_609529302",
+      "dateCreated": "2018-11-02 13:27:44.247",
+      "dateStarted": "2018-11-02 13:53:46.707",
+      "dateFinished": "2018-11-02 13:54:03.856",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "title": "Save to ORC file",
+      "text": "%spark\n\nimport org.apache.spark.sql.SaveMode\n\n// Save and Overwrite our new DataFrame to an ORC file\nflightsWithDelays.write.format(\"orc\").mode(SaveMode.Overwrite).save(\"flightsWithDelays.orc\")\n",
+      "user": "anonymous",
+      "dateUpdated": "2018-11-02 13:56:20.990",
+      "config": {
+        "colWidth": 12.0,
+        "fontSize": 9.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "editorMode": "ace/mode/scala",
+        "title": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "import org.apache.spark.sql.SaveMode\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1541147026668_979291723",
+      "id": "20181102-135346_1173943427",
+      "dateCreated": "2018-11-02 13:53:46.668",
+      "dateStarted": "2018-11-02 13:56:21.028",
+      "dateFinished": "2018-11-02 13:57:09.478",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "title": "Load back from an ORC file",
+      "text": "%spark\n\n// Load results back from ORC file\nval test \u003d spark.read.format(\"orc\").load(\"flightsWithDelays.orc\")\n\n// Assert both DataFrames of the same size.\n//   Note that if assertion succeeds no warning messages will be printed\nassert (test.count \u003d\u003d flightsWithDelays.count, println(\"Assertion Fail: Files are of different sizes.\"))\n\ntest.show(10)",
+      "user": "anonymous",
+      "dateUpdated": "2018-11-02 14:01:27.362",
+      "config": {
+        "colWidth": 12.0,
+        "fontSize": 9.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "editorMode": "ace/mode/scala",
+        "title": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "test: org.apache.spark.sql.DataFrame \u003d [YEAR: string, MONTH: string ... 5 more fields]\n+----+-----+-------+-------------+--------------+---------------+---------+\n|YEAR|MONTH|AIRLINE|FLIGHT_NUMBER|ORIGIN_AIRPORT|DEPARTURE_DELAY|IsDelayed|\n+----+-----+-------+-------------+--------------+---------------+---------+\n|2015|    1|     AS|           98|           ANC|            -11|        0|\n|2015|    1|     AA|         2336|           LAX|             -8|        0|\n|2015|    1|     US|          840|           SFO|             -2|        0|\n|2015|    1|     AA|          258|           LAX|             -5|        0|\n|2015|    1|     AS|          135|           SEA|             -1|        0|\n|2015|    1|     DL|          806|           SFO|             -5|        0|\n|2015|    1|     NK|          612|           LAS|             -6|        0|\n|2015|    1|     US|         2013|           LAX|             14|        0|\n|2015|    1|     AA|         1112|           SFO|            -11|        0|\n|2015|    1|     DL|         1173|           LAS|              3|        0|\n+----+-----+-------+-------------+--------------+---------------+---------+\nonly showing top 10 rows\n\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1541147180990_-110053383",
+      "id": "20181102-135620_1440159649",
+      "dateCreated": "2018-11-02 13:56:20.990",
+      "dateStarted": "2018-11-02 13:59:35.760",
+      "dateFinished": "2018-11-02 14:00:03.194",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "title": "Save DataFrame as Permanent Table",
+      "text": "%spark\n\nflightsWithDelays.write.format(\"orc\").mode(SaveMode.Overwrite).saveAsTable(\"flightswithdelaystbl\")",
+      "user": "anonymous",
+      "dateUpdated": "2018-11-02 14:02:23.981",
+      "config": {
+        "colWidth": 12.0,
+        "fontSize": 9.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "editorMode": "ace/mode/scala",
+        "title": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": []
+      },
+      "apps": [],
+      "jobName": "paragraph_1541147375699_622352706",
+      "id": "20181102-135935_279121960",
+      "dateCreated": "2018-11-02 13:59:35.699",
+      "dateStarted": "2018-11-02 14:02:24.016",
+      "dateFinished": "2018-11-02 14:03:06.011",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "title": "Show Tables/Views",
+      "text": "%spark.sql\n\nSHOW TABLES\n\n-- Note that flightsWithDelaysTbl is a permanent table instead of a temporary view!",
+      "user": "anonymous",
+      "dateUpdated": "2018-11-02 14:05:19.067",
+      "config": {
+        "colWidth": 12.0,
+        "fontSize": 9.0,
+        "enabled": true,
+        "results": {
+          "0": {
+            "graph": {
+              "mode": "table",
+              "height": 300.0,
+              "optionOpen": false,
+              "setting": {
+                "table": {
+                  "tableGridState": {},
+                  "tableColumnTypeState": {
+                    "names": {
+                      "database": "string",
+                      "tableName": "string",
+                      "isTemporary": "string"
+                    },
+                    "updated": false
+                  },
+                  "tableOptionSpecHash": "[{\"name\":\"useFilter\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable filter for columns\"},{\"name\":\"showPagination\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable pagination for better navigation\"},{\"name\":\"showAggregationFooter\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable a footer for displaying aggregated values\"}]",
+                  "tableOptionValue": {
+                    "useFilter": false,
+                    "showPagination": false,
+                    "showAggregationFooter": false
+                  },
+                  "updated": false,
+                  "initialized": false
+                },
+                "multiBarChart": {
+                  "rotate": {
+                    "degree": "-45"
+                  },
+                  "xLabelStatus": "default"
+                }
+              },
+              "commonSetting": {},
+              "keys": [
+                {
+                  "name": "database",
+                  "index": 0.0,
+                  "aggr": "sum"
+                }
+              ],
+              "groups": [],
+              "values": [
+                {
+                  "name": "tableName",
+                  "index": 1.0,
+                  "aggr": "sum"
+                }
+              ]
+            },
+            "helium": {}
+          }
+        },
+        "editorSetting": {
+          "language": "sql",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "editorMode": "ace/mode/sql",
+        "title": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TABLE",
+            "data": "database\ttableName\tisTemporary\ndefault\tflightswithdelaystbl\tfalse\n\tflightsview\ttrue\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1541147543981_-1545836679",
+      "id": "20181102-140223_1244294759",
+      "dateCreated": "2018-11-02 14:02:23.982",
+      "dateStarted": "2018-11-02 14:03:39.194",
+      "dateFinished": "2018-11-02 14:03:39.494",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "title": "Querying a Permanent Table",
+      "text": "%spark.sql\n\nSELECT COUNT(1) AS Total from flightswithdelaystbl  -- As you can see, there\u0027s no difference in querying a temporary view vs a permanent table",
+      "user": "anonymous",
+      "dateUpdated": "2018-11-02 14:06:06.681",
+      "config": {
+        "colWidth": 12.0,
+        "fontSize": 9.0,
+        "enabled": true,
+        "results": {
+          "0": {
+            "graph": {
+              "mode": "table",
+              "height": 300.0,
+              "optionOpen": false,
+              "setting": {
+                "table": {
+                  "tableGridState": {},
+                  "tableColumnTypeState": {
+                    "names": {
+                      "Total": "string"
+                    },
+                    "updated": false
+                  },
+                  "tableOptionSpecHash": "[{\"name\":\"useFilter\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable filter for columns\"},{\"name\":\"showPagination\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable pagination for better navigation\"},{\"name\":\"showAggregationFooter\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable a footer for displaying aggregated values\"}]",
+                  "tableOptionValue": {
+                    "useFilter": false,
+                    "showPagination": false,
+                    "showAggregationFooter": false
+                  },
+                  "updated": false,
+                  "initialized": false
+                }
+              },
+              "commonSetting": {}
+            }
+          }
+        },
+        "editorSetting": {
+          "language": "sql",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "editorMode": "ace/mode/sql",
+        "title": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TABLE",
+            "data": "Total\n5819079\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1541147619151_-2057541751",
+      "id": "20181102-140339_722365839",
+      "dateCreated": "2018-11-02 14:03:39.151",
+      "dateStarted": "2018-11-02 14:06:03.398",
+      "dateFinished": "2018-11-02 14:06:04.195",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    }
+  ],
+  "name": "Flight",
+  "id": "2DW4ECK61",
+  "noteParams": {},
+  "noteForms": {},
+  "angularObjects": {
+    "spark:shared_process": []
+  },
+  "config": {
+    "isZeppelinNotebookCronEnable": false,
+    "looknfeel": "default",
+    "personalizedMode": "false"
+  },
+  "info": {}
+}
